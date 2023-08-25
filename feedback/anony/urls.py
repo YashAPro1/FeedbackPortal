@@ -5,5 +5,7 @@ from django.urls import path, include
 from . import views
 
 urlpatterns = [
-    path('',views.instructorDetail),
+    path('ffeedback/',views.anonySignup,name="signup"),
+    path('theory_feedback/',views.TheoryFeedback,name="theoryfeedbck"),
+    path('pract_feedback/',views.PracticalFeedback,name="practicalfeedbck"),
 ]
