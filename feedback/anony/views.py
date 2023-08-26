@@ -38,8 +38,7 @@ def instructorDetail(requests):
 @api_view(['GET',"POST"])    
 def TheoryFeedback(requests):
     if requests.method == "POST":
-        tasks = models.Theory_feedback.objects.all()
-        serializer = theoryfeedbackmodelSerializers(tasks,many=True)
+        serializer = theoryfeedbackmodelSerializers(requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -53,8 +52,7 @@ def TheoryFeedback(requests):
 @api_view(['GET',"POST"])    
 def PracticalFeedback(requests):
     if requests.method == "POST":
-        tasks = models.Practical_feedback.objects.all()
-        serializer = pracfeedbackmodelSerializers(tasks,many=True)
+        serializer = pracfeedbackmodelSerializers(requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
