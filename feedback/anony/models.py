@@ -2,7 +2,18 @@ from django.db import models
 from operat.models import Faculty,Subjects,practical_questions,theory_questions
 # Create your models here.
 import datetime
+
+#Model For the User
+class User(models.Model):
+    UserName = models.CharField(max_length=35)
+    password = models.CharField(max_length=300)
+    def __str__(self):
+        return self.UserName
+    
+
+#Model For practical feedback questions
 class Practical_feedback(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     department = models.CharField(max_length=200)
@@ -29,7 +40,9 @@ class Practical_feedback(models.Model):
         return f"Practical_feedback : {self.id}"
     
 
+#Model For practical feedback questions
 class Theory_feedback(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE,null=True)
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     department = models.CharField(max_length=200)

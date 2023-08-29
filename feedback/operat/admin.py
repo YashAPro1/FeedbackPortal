@@ -8,4 +8,5 @@ admin.site.register(models.Faculty)
 admin.site.register(models.Mapfaculty)
 admin.site.register(models.theory_questions)
 admin.site.register(models.practical_questions)
+admin.site.register(models.Department)
     

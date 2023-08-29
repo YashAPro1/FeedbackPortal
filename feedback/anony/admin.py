@@ -4,3 +4,4 @@ from . import models
 
 admin.site.register(models.Practical_feedback)
 admin.site.register(models.Theory_feedback)
+admin.site.register(models.User)

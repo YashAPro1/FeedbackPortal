@@ -63,3 +63,9 @@ class practical_questions(models.Model):
     
 
 # print(practical_questions.objects.aggregate(models.Avg("option1")))
+
+class Department(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+    

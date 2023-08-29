@@ -1,13 +1,13 @@
 from django.shortcuts import render
 from django.http import JsonResponse
-from django.contrib.auth.models import User
 from . import models
-from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers
+from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers,UsermodelSerializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+import bcrypt
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
-
 
 
 def anonySignup(request):
@@ -20,10 +20,10 @@ def anonySignup(request):
 
         # check for wrong input
          
-        if User.objects.filter(username=username).exists():
+        if models.User.objects.filter(username=username).exists():
            return JsonResponse({'handlelogin':"already exist user"})
         else:
-            myuser = User.objects.create_user(username, email, pass1)
+            myuser = models.User.objects.create_user(username, email, pass1)
             myuser.save()
             return JsonResponse({'handlelogin':"done"})
 
@@ -31,9 +31,6 @@ def anonySignup(request):
         return JsonResponse({"user":"404 - Not found"})
     
 
-
-def instructorDetail(requests):
-    return JsonResponse({"Bool":True})
 
 @api_view(['GET',"POST"])    
 def TheoryFeedback(requests):
@@ -63,7 +60,44 @@ def PracticalFeedback(requests):
         serializer = pracfeedbackmodelSerializers(tasks,many=True)
         return Response(serializer.data)
 
-    
+
+@api_view(["POST"])
+def usersignUp(request):
+    if request.method == 'POST':
+        tempdict = request.data.copy() # Empty initially
+        pwd = tempdict["password"]
+        bytePwd = pwd.encode('utf-8')
+        mySalt = bcrypt.gensalt()
+        pwd_hash = bcrypt.hashpw(bytePwd, mySalt)
+        tempdict['password'] = pwd_hash
+        print(tempdict)
+        serializer = UsermodelSerializers(data=tempdict)
+        
+        if serializer.is_valid():
+            serializer.save()
+            
+            return Response({"bool:True"}, status=status.HTTP_201_CREATED)
+        else:
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
     
+
+@api_view(["GET","POST"])
+@csrf_exempt
+def UserLogin(requests):
+    
+    username = requests.POST['username']
+    password = requests.POST['password']
+    password = password.encode('utf-8')
+    
+    try:    
+        instructor = models.User.objects.get(UserName = username)
+        inspassword = instructor.password.encode('utf-8')
+        if bcrypt.checkpw(password, inspassword):#checkking the password
+            
+            return Response({'bool':True,'msg':"Welcome",'Userid':instructor.id},status=status.HTTP_201_CREATED)
+        else:
+            return Response({'bool':False,'msg':"Incorrect Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+    except:
+        return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
     
