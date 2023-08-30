@@ -61,7 +61,7 @@ def PracticalFeedback(requests):
         return Response(serializer.data)
 
 
-@api_view(["POST"])
+@api_view(["POST","GET"])
 def usersignUp(request):
     if request.method == 'POST':
         tempdict = request.data.copy() # Empty initially
@@ -79,6 +79,8 @@ def usersignUp(request):
             return Response({"bool:True"}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    else:
+        return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
 
     
 
