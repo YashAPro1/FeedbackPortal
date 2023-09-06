@@ -1,0 +1,36 @@
+.loginC{
+    background: rgb(255, 254, 251);
+    border: 0.15rem solid var(--somColor);
+    padding: 2rem;
+    border-radius: 0.3rem;
+    gap: 1rem;
+}
+
+.insLU{
+    border: 0.2rem solid transparent;
+    border-bottom: 0.2rem solid var(--somColor);
+    font-size: 1.3rem;
+    padding: 0.4rem;
+    transition: 0.2s all ease-out;
+    width: 15rem;
+}
+
+.insLU:focus{
+    border: 0.2rem solid var(--somColor);
+    outline: none;
+    border-radius: 0.4rem;
+}
+
+.divInsL p{
+    width: 10rem;
+    text-align: center;
+}
+
+.doLog{
+    background: var(--somColor);
+    color: white;
+    padding: 0.6rem;
+    border-radius: 0.4rem;
+    font-size: 1.2rem;
+}
+

@@ -1,0 +1,444 @@
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&family=Inter:wght@500&family=Nanum+Gothic+Coding&family=Roboto:wght@500&family=Rubik&family=Share+Tech&family=Ubuntu:wght@300&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Rubik', sans-serif;
+    font-weight: 500;
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
+    overflow-wrap: break-word;
+    scroll-behavior: smooth;
+}
+
+img {
+    user-drag: none;
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+}
+
+:root {
+    --som-dark: #b7202f;
+    --som-lt: #ed1b24;
+    --somColor: #97081c;
+    --somTColor: #005baa;
+    --pTop: 4rem;
+}
+
+body {
+    color: var(--somColor);
+}
+
+::-webkit-scrollbar {
+    width: 0.4rem;
+    height: 0.5rem;
+}
+
+::-webkit-scrollbar-button {
+    height: 0;
+    width: 0;
+}
+
+::-webkit-scrollbar-track {
+    background: rgb(255, 255, 255);
+    /* border: 0.3rem solid rgb(255, 255, 255); */
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 0.9rem;
+    background: grey;
+    background-clip: padding-box;
+    border: 0.1rem solid rgb(255, 255, 255);
+    /* box-shadow: 0 -100vh 0 100vh var(--lightSomColor); */
+}
+
+button{
+    border: none;
+    outline: none;
+    background: none;
+    transition: 0.2s all ease-out;
+    cursor: pointer;
+}
+
+button:hover{
+    opacity: 0.8;
+}
+
+.fullbg {
+    width: 100%;
+    height: 100%;
+    /* background: wheat; */
+    /* padding:1rem; */
+    /* gap: 0.5rem; */
+    padding-top: var(--pTop);
+}
+
+.divf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fullWH{
+    min-height: 100vh;
+    width: 100%;
+}
+
+.wFull{
+    width: 100%;
+}
+
+.headT{
+    background: rgb(255, 239, 210);
+    padding: 0.5rem;
+    font-weight: 600;
+}
+
+.fdirc {
+    flex-direction: column;
+}
+
+.jusSB {
+    justify-content: space-between;
+}
+
+/* font size */
+
+.f1-2{
+    font-size: 1.2rem;
+}
+
+.f1-5{
+    font-size: 1.5rem;
+}
+
+.f2{
+    font-size: 2rem;
+}
+
+
+/* finish font size */
+
+/* gap */
+.gapS{
+    gap: 0.3rem;
+}
+
+.gapSM{
+    gap: 0.5rem;
+}
+
+/* gap ends */
+
+/*  */
+.mUpM{
+    margin-top: 1rem;
+}
+
+/*  */
+
+
+.specIns{
+    padding: 0.2rem;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+}
+
+.specBut{
+    padding: 0.3rem;
+    border: 0.18rem solid var(--somColor);
+    border-radius: 0.3rem;
+    font-size: 1.1rem;
+    background: white;
+}
+
+.pLeft {
+    padding-left: 11rem !important;
+}
+
+.mainContent {
+    justify-content: start;
+    height: 100%;
+    width: 100%;
+    /* background: wheat; */
+    min-height: calc(100vh - var(--pTop));
+    padding: 0.5rem;
+}
+
+.infoC {
+    background: rgba(235, 177, 177, 0.25);
+    /* margin: 0.5rem 1rem; */
+    width: 100%;
+    border-radius: 0.4rem;
+    flex-wrap: wrap;
+    row-gap: 0.5rem;
+    column-gap: 10rem;
+    justify-content: start;
+    padding: 0.4rem 0.5rem;
+    font-size: 1.1rem;
+}
+
+.infP span {
+    color: black;
+    margin-right: 0.3rem;
+}
+
+.infP span::after {
+    content: ":";
+}
+
+.sliderSub {
+    position: fixed;
+    left: 0;
+    background: rgb(255, 255, 255);
+    /* margin: 0.5rem 1rem; */
+    width: 10rem;
+    height: 100%;
+    height: calc(100vh - var(--pTop));
+    /* justify-content: start; */
+    /* border-radius: 1.5rem; */
+    padding: 0.5rem 1rem;
+    font-size: 1.1rem;
+    /* gap: 0.8rem; */
+    overflow-y: auto;
+    overflow-x:hidden;
+    /* border-right: 0.2rem solid var(--somColor); */
+    box-shadow: 0.1rem 0.1rem 0.3rem var(--somTColor);
+}
+
+.sliderSec {
+    background: rgb(204, 204, 204);
+    /* padding: 0.5rem; */
+    width: 100%;
+    gap: 0.5rem;
+    border-radius: 0.3rem;
+    /* overflow: hidden; */
+    border: 0.1rem solid rgb(100, 100, 100);
+    margin: 0.8rem 0;
+    /* overflow: auto; */
+}
+
+.allSlSec {
+    padding: 0.5rem;
+    gap: 0.8rem;
+    width: 100%;
+
+}
+
+.divIndS {
+    position: relative;
+    width: 100%;
+    background: none;
+    border-radius: 0.3rem;
+    /* background: wheat; */
+}
+
+.indSub {
+    /* background: rgba(182, 182, 182, 0.5); */
+    border: none;
+    outline: none;
+    padding: 0.3rem 0.6rem;
+    font-size: 1.3rem;
+    border-radius: 0.3rem;
+    /* margin: 0 0.5rem; */
+    /* cursor: pointer;  */
+    width: 100%;
+    background: none;
+    /* color: var(--somColor); */
+}
+
+.indSub:hover{
+    background: #005baa31;
+}
+
+.divIndS .hovP{
+    display: none;
+    position: absolute;
+    /* left: 10rem; */
+    top: calc(100% + 0.5rem);
+    background: white;
+    box-shadow: 0 0 0.1rem grey;
+    z-index: 10;
+    font-size: 0.8rem;
+    padding: 0.2rem;
+    border-radius: 0.3rem;
+    transform: translateY(3rem);
+    opacity: 0;
+    transition: 0.2s all ease-out;
+    z-index: 10;
+}
+
+.divIndS:hover .hovP{
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.ccSub {
+    background: var(--somTColor);
+    color: white;
+}
+
+.ccSub:hover{
+    background: var(--somTColor);
+}
+
+
+
+.inSH {
+    background: var(--somTColor);
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 0.4rem;
+    font-size: 1.3rem;
+}
+
+.fg1 {
+    flex-grow: 1;
+}
+
+/* table questions */
+.quesT {
+    width: 100%;
+    height: 100%;
+    /* overflow: auto; */
+    margin: 1rem 0;
+}
+
+.quesT table {
+    width: 100%;
+    height: 100%;
+    background: rgb(255, 255, 255);
+    text-align: center;
+    /* border-radius: 0.4rem; */
+    /* overflow: hidden; */
+}
+
+.quesT thead {
+    background: var(--somColor);
+    color: white;
+    font-size: 1.3rem;
+}
+
+.quesT table,
+.quesT thead,
+.quesT tr,
+.quesT td,
+.quesT th {
+    border: 0.13rem solid rgb(163, 163, 163);
+    border-collapse: collapse;
+}
+
+.quesT th,
+.quesT td {
+    padding: 0.3rem;
+}
+
+.quesText {
+    font-size: 1.2rem;
+}
+
+
+/* dropdown inputs */
+.mainInsQ {
+    /* background: wheat; */
+    width: fit-content;
+    margin: auto;
+}
+
+
+.insD {
+    position: relative;
+    padding: 0.2rem;
+    border-radius: 0.2rem;
+    border: 0.13rem solid var(--somColor);
+    box-shadow: inset 0 0 0.4rem rgb(255, 203, 203);
+    width: 10rem;
+    height: 2rem;
+    overflow: hidden;
+    cursor: text;
+}
+
+.insDCurr::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.5rem;
+    height: 0.5rem;
+    background: rgb(255, 230, 230);
+    /* box-shadow: 0 0 0.1rem 0.3rem rgb(0, 0, 0); */
+    border: 0.2rem solid rgb(253, 167, 167);
+    border-radius: 50%;
+    animation: expandIns normal 1s linear infinite;
+}
+
+@keyframes expandIns {
+    0% {
+        transform: translate(-50%, -50%);
+    }
+
+    100% {
+        transform: translate(-50%, -50%);
+        width: 12rem;
+        height: 12rem;
+    }
+}
+
+.mainInsQ:hover .dropIns {
+    clip-path: circle(99.8% at 50% 0);
+}
+
+.dropIns {
+    position: absolute;
+    top: 0;
+    /* z-index: 5; */
+    background: rgb(189, 189, 189);
+    width: 12rem;
+    padding: 0.3rem 0;
+    border-radius: 0.4rem;
+    gap: 0.1rem;
+    clip-path: circle(0% at 50% 0);
+    transition: 0.2s all ease-out;
+    z-index: 5;
+}
+
+.dropIns button {
+    position: relative;
+    width: 100%;
+    padding: 0.3rem 0;
+    margin: 0;
+    background: rgb(150, 150, 150);
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: 0.2s all ease-out;
+}
+
+.dropIns button:hover {
+    background: rgb(206, 206, 206);
+    color: black;
+}
+
+/* fgap */
+.fGapS {
+    gap: 0.3rem;
+}
+
+/* relative pos */
+.posR {
+    position: relative;
+}
