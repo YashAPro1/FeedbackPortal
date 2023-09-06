@@ -20,7 +20,7 @@ class Practical_feedback(models.Model):
     division = models.CharField(max_length=5)
     batch = models.IntegerField()
     semester = models.IntegerField()
-    f_date = models.DateField(default=datetime.date.today)
+    f_date = models.IntegerField(default=datetime.date.today().year)
     attendence = models.CharField(max_length=30)
     # for obj in practical_questions.objects.all():
     #     Z = obj.name
@@ -49,7 +49,7 @@ class Theory_feedback(models.Model):
     division = models.CharField(max_length=5)
     batch = models.IntegerField()
     semester = models.IntegerField()
-    f_date = models.DateField(default=datetime.date.today)
+    f_date = models.IntegerField(default=datetime.date.today().year)
     attendence = models.CharField(max_length=30)
     # for obj in theory_questions.objects.all():
     #     Z = obj.name

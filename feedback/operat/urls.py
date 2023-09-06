@@ -9,4 +9,5 @@ urlpatterns = [
     path('mapfaculty/', views.mapfacultyDetail,name='Mapfaculty'),
     path('faculty/', views.FacultyDetail,name='faculty'),
     path('subject/', views.SubjectDetail,name='Subject'),
+    path('calculate/', views.Calculateavg,name='calculate'),
 ]

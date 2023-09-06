@@ -1,4 +1,5 @@
 from django.db import models
+import datetime
 # Create your models here.
 
 
@@ -29,7 +30,7 @@ class Mapfaculty(models.Model):
     tutorial = models.IntegerField()
     practical_batch = models.IntegerField()
     tutorial_batch = models.IntegerField()
-    year = models.IntegerField()
+    year = models.IntegerField(default=datetime.date.today().year)
 
     def __str__(self):
         return f"Semester {self.sem} Year {self.year}"
@@ -68,4 +69,33 @@ class Department(models.Model):
     name = models.CharField(max_length=50)
     def __str__(self):
         return self.name
+    
+class Calculatedtheory(models.Model):
+    faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
+    department = models.CharField(max_length=200)
+    division = models.CharField(max_length=5)
+    batch = models.IntegerField()
+    semester = models.IntegerField()
+    f_date = models.IntegerField(default=datetime.date.today().year)
+    # for obj in theory_questions.objects.all():
+    #     Z = obj.name
+    #     X = locals()
+    #     X[Z] = models.IntegerField(null=True)
+
+    Q1 = models.IntegerField(null=True)
+    Q2 = models.IntegerField(null=True)
+    Q3 = models.IntegerField(null=True)
+    Q4 = models.IntegerField(null=True)
+    Q5 = models.IntegerField(null=True)
+    Q6 = models.IntegerField(null=True)
+    Q7 = models.IntegerField(null=True)
+    Q8 = models.IntegerField(null=True)
+    Q9 = models.IntegerField(null=True)
+    Q10 = models.IntegerField(null=True)
+    Q11 = models.IntegerField(null=True)
+    Q12 = models.IntegerField(null=True)
+
+    def __str__(self):
+        return f"Claculated Theory : {self.f_date}"
     
