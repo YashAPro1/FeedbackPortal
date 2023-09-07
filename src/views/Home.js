@@ -34,7 +34,8 @@ export default function Home() {
         setInsArr([...cloneA]);
         retId("insD" + i).innerHTML = val;
         retId("mainQD" + i).classList.remove("mainInsQ");
-        console.log(val);
+        retId("insD" + i).classList.add("selInsD")
+        // console.log(val);
     }
 
     function retId(idn) {

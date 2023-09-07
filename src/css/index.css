@@ -85,13 +85,13 @@ body {
     justify-content: space-between;
 }
 
-.specIns{
+.specIns {
     padding: 0.2rem;
     font-size: 1rem;
     border-radius: 0.3rem;
 }
 
-.specBut{
+.specBut {
     padding: 0.3rem;
     border: 0.18rem solid var(--somColor);
     border-radius: 0.3rem;
@@ -148,7 +148,7 @@ body {
     font-size: 1.1rem;
     /* gap: 0.8rem; */
     overflow-y: auto;
-    overflow-x:hidden;
+    overflow-x: hidden;
     /* border-right: 0.2rem solid var(--somColor); */
     box-shadow: 0.1rem 0.1rem 0.3rem var(--somTColor);
 }
@@ -178,6 +178,7 @@ body {
     background: none;
     border-radius: 0.3rem;
     /* background: wheat; */
+    transition: 0.2s all ease-out;
 }
 
 .indSub {
@@ -191,15 +192,16 @@ body {
     /* cursor: pointer;  */
     width: 100%;
     background: none;
+    transition: 0.2s all ease-out;
     /* color: var(--somColor); */
 }
 
-.indSub:hover{
+.divIndS:hover {
     background: #005baa31;
 }
 
-.divIndS .hovP{
-    display: none;
+.divIndS .hovP {
+    /* display: none; */
     position: absolute;
     /* left: 10rem; */
     top: calc(100% + 0.5rem);
@@ -209,24 +211,31 @@ body {
     font-size: 0.8rem;
     padding: 0.2rem;
     border-radius: 0.3rem;
-    transform: translateY(3rem);
+    transform: scale(0);
     opacity: 0;
     transition: 0.2s all ease-out;
     z-index: 10;
 }
 
-.divIndS:hover .hovP{
-    display: block;
-    opacity: 1;
-    transform: translateY(0);
+.hovP:hover {
+    opacity: 0;
+    transform: scale(0);
 }
+
+.divIndS:hover .hovP {
+    /* display: block; */
+    opacity: 1;
+    transform: scale(1);
+}
+
+
 
 .ccSub {
     background: var(--somTColor);
     color: white;
 }
 
-.ccSub:hover{
+.ccSub:hover {
     background: var(--somTColor);
 }
 
@@ -304,7 +313,12 @@ body {
     width: 10rem;
     height: 2rem;
     overflow: hidden;
-    cursor: text;
+    cursor: pointer;
+    transition: 0.2s all ease-out;
+}
+
+.selInsD {
+    background: wheat;
 }
 
 .insDCurr::after {
