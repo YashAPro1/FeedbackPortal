@@ -2,50 +2,51 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Navbar from "../components/Navbar";
 import { faBookOpen, faFlaskVial } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
-import axios from "axios";
+// import axios from "axios";
 
 export default function Home() {
   const [insArr, setInsArr] = useState();
   const [theory, settheory] = useState();
+  
 
-  async function getallquestions() {
-    try {
-      await axios.get("http://127.0.0.1:8000/api/theoryquest/",{
-        headers: {
-            'content-type': 'text/json',
-            
-        }
-      }).then(res=>{
-        console.log(res.data)
-      })
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  console.log(theory);
+  // async function getallquestions() {
+  //   try {
+  //     await axios.get("http://127.0.0.1:8000/api/theoryquest/",{
+  //       headers: {
+  //           'content-type': 'text/json',
 
-  useEffect(() => {
-    if (!insArr) {
-      var newArr = [];
-      for (var i = 0; i < 10; i++) {
-        newArr.push("");
-      }
-      setInsArr([...newArr]);
-    } else {
-      var i = 0;
-      var cloneArr = [...insArr];
-      while (cloneArr[i].length >= 1) {
-        i++;
-        if (i === cloneArr.length) {
-          break;
-        }
-      }
-    }
-  }, [insArr]);
+  //       }
+  //     }).then(res=>{
+  //       console.log(res.data)
+  //     })
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+  // console.log(theory);
 
-  useEffect(() => {
-    getallquestions();
-  }, []);
+  // useEffect(() => {
+  //   if (!insArr) {
+  //     var newArr = [];
+  //     for (var i = 0; i < 10; i++) {
+  //       newArr.push("");
+  //     }
+  //     setInsArr([...newArr]);
+  //   } else {
+  //     var i = 0;
+  //     var cloneArr = [...insArr];
+  //     while (cloneArr[i].length >= 1) {
+  //       i++;
+  //       if (i === cloneArr.length) {
+  //         break;
+  //       }
+  //     }
+  //   }
+  // }, [insArr]);
+
+  // useEffect(() => {
+  //   getallquestions();
+  // }, []);
 
   function handleInput(i, val) {
     var cloneA = [...insArr];
