@@ -70,7 +70,7 @@ class Theory_feedback(models.Model):
     Q12 = models.IntegerField(null=True)
     comment = models.TextField()
 
-    def __str__(self):
-        return f"Theory_feedback : {self.id}"
+    # def __str__(self):
+    #     return f"Theory_feedback : {self.id}"
     
 

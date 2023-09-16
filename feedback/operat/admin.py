@@ -1,12 +1,29 @@
 from django.contrib import admin
-from . import models
+from . import models as md
 
 # Register your models here.
 
-admin.site.register(models.Subjects)
-admin.site.register(models.Faculty)
-admin.site.register(models.Mapfaculty)
-admin.site.register(models.theory_questions)
-admin.site.register(models.practical_questions)
-admin.site.register(models.Department)
+@admin.register(md.Subjects)
+class SubjectAdmin(admin.ModelAdmin):
+    list_display = ["id","subject","semester"]
+
+@admin.register(md.Faculty)
+class FacultyAdmin(admin.ModelAdmin):
+    list_display = ["id","faculty_name","department"]
+
+@admin.register(md.Mapfaculty)
+class MapfacultyAdmin(admin.ModelAdmin):
+    list_display = ["id","sem","faculty","department","subject","divison","theory","practical","tutorial","practical_batch","tutorial_batch","year"]
+   
+@admin.register(md.Department)
+class DepartmentAdmin(admin.ModelAdmin):
+    list_display = ["id","name"]
+
+admin.site.register(md.theory_questions)
+
+
+admin.site.register(md.practical_questions)
+
+
+
     

@@ -8,7 +8,8 @@ from . import models
 from rest_framework.response import Response
 from rest_framework import status
 from anony.models import Theory_feedback,Practical_feedback
-
+import io
+from rest_framework.parsers import JSONParser
 # Create your views here.
 
 
@@ -16,6 +17,12 @@ from anony.models import Theory_feedback,Practical_feedback
 def staffSignup(request):
     if request.method=="POST":
         # Get the signup parameters2
+         # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = pracquestmodelSerializers(python_data)
+        # ##end
         print(request.data)
         username=request.data['username']
         email=request.data['email']
@@ -43,8 +50,16 @@ def staffSignup(request):
 def pracquestDetail(requests):
     #For posting the data
     if requests.method  == "POST":
-        serializer = pracquestmodelSerializers(requests.data)
+        # ##start
+        # json_data = requests.body
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = pracquestmodelSerializers(data=python_data)
+        # ##end
+        
+        serializer = pracquestmodelSerializers(data=requests.data)
         if serializer.is_valid():
+            serializer.save()
             return JsonResponse({"status":"posted succesfully"})
         else:
             return JsonResponse({"status":"Unsuccesfull"})
@@ -59,8 +74,15 @@ def pracquestDetail(requests):
 def theoryquestDetail(requests):
     #For posting the data
     if requests.method  == "POST":
+        # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = TheorymodelSerializers(python_data)
+        # ##end
         serializer = TheorymodelSerializers(requests.data)
         if serializer.is_valid():
+            serializer.save()
             return JsonResponse({"status":"posted succesfully"})
         else:
             return JsonResponse({"status":"Unsuccesfull"})
@@ -74,15 +96,23 @@ def theoryquestDetail(requests):
 @api_view(['GET',"POST"])    
 def mapfacultyDetail(requests):
     #For posting the data
+    
     if requests.method  == "POST":
-        serializer = FacultyMapmodelSerializers(requests.data)
+        # ##start
+        # json_data = requests.body
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = FacultyMapmodelSerializers(data=python_data)
+        # ##end
+        serializer = FacultyMapmodelSerializers(data=requests.data)
         if serializer.is_valid():
+            serializer.save()
             return JsonResponse({"status":"posted succesfully"})
         else:
             return JsonResponse({"status":"Unsuccesfull"})
     #for retriving the data    
     else:
-        tasks = models.Faculty.objects.all()
+        tasks = models.Mapfaculty.objects.all()
         serializer = FacultyMapmodelSerializers(tasks,many=True)
         
         return Response(serializer.data)
@@ -90,9 +120,17 @@ def mapfacultyDetail(requests):
 @api_view(['GET',"POST"])    
 def SubjectDetail(requests):
     #For posting the data
+     
     if requests.method  == "POST":
+        # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = SubjectmodelSerializers(python_data)
+        # ##end
         serializer = SubjectmodelSerializers(requests.data)
         if serializer.is_valid():
+            serializer.save()
             return JsonResponse({"status":"posted succesfully"})
         else:
             return JsonResponse({"status":"Unsuccesfull"})
@@ -106,7 +144,14 @@ def SubjectDetail(requests):
 @api_view(['GET',"POST"])    
 def FacultyDetail(requests):
     #For posting the data
+    
     if requests.method == 'POST':
+         # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = FacultymodelSerializers(python_data)
+        # ##end
         serializer = FacultymodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
@@ -130,7 +175,7 @@ def Calculateavg(requests):
     # faculty = requests.POST['faculty']
     # year = requests.POST['year']
     # sem = requests.POST['sem']
-    cal = {}
+    cal = {}s
     practical_feedback = {}
     theory_feedback = {}
     if models.Faculty.objects.filter(faculty_name=faculty).exists():
