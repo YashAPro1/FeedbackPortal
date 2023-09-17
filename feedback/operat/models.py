@@ -70,6 +70,7 @@ class Subjects(models.Model):
 class Faculty(models.Model):
     faculty_name = models.CharField(max_length=200)
     department = models.CharField(max_length=200)
+    subject = models.CharField(max_length=200,null=True)
     def __str__(self):
         return self.faculty_name
     

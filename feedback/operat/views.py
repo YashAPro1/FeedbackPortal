@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from django.db import models as mod
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer
+from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from . import models
 from rest_framework.response import Response
@@ -194,6 +194,34 @@ def FacultyDetail(requests):
         if filterset.is_valid():
          queryset = filterset.qs
         serializer = FacultymodelSerializers(queryset,many=True)
+        
+        return Response(serializer.data)
+    
+@api_view(['GET',"POST"])    
+def DepartmentDetail(requests):
+    #For posting the data
+    
+    if requests.method == 'POST':
+         # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = FacultymodelSerializers(python_data)
+        # ##end
+        serializer = DepartmentmodelSerializers(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
+    #for retriving the data
+    else:
+
+        tasks = models.Faculty.objects.all()
+        filterset = DepartmentFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = DepartmentmodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
     

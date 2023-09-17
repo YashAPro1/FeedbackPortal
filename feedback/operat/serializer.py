@@ -71,14 +71,19 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError("it cannot be greater that 8 or less than 1")
         return value
     
+class FacultyMapmodelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.Mapfaculty
+        fields = "__all__"
+
 
 #Serializer for Faculty
-class FacultymodelSerializers(serializers.ModelSerializer):
+class DepartmentmodelSerializers(serializers.ModelSerializer):
     class Meta:
-        model = models.Faculty
+        model = models.Department
         fields = "__all__"
     def create(self,validate_data):
-        return  models.Faculty.objects.create(**validate_data)
+        return  models.Department.objects.create(**validate_data)
 
 #Serializer for all Subjects
 class SubjectmodelSerializers(serializers.ModelSerializer):
