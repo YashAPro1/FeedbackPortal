@@ -9,6 +9,7 @@ import bcrypt
 from django.views.decorators.csrf import csrf_exempt
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
+from .filters import TheoryFilter,PracticalFilter
 # Create your views here.
 
 
@@ -45,7 +46,11 @@ def TheoryFeedback(requests):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         tasks = models.Theory_feedback.objects.all()
-        serializer = theoryfeedbackmodelSerializers(tasks,many=True)
+        filterset = TheoryFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = theoryfeedbackmodelSerializers(queryset,many=True)
+            
         return Response(serializer.data)
     
 
@@ -61,7 +66,10 @@ def PracticalFeedback(requests):
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     else:
         tasks = models.Practical_feedback.objects.all()
-        serializer = pracfeedbackmodelSerializers(tasks,many=True)
+        filterset = PracticalFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = pracfeedbackmodelSerializers(queryset,many=True)
         return Response(serializer.data)
 
 # @permission_classes([AllowAny,])
@@ -88,23 +96,23 @@ def PracticalFeedback(requests):
 
     
 
-@api_view(["GET","POST"])
-@csrf_exempt
-def UserLogin(requests):
+# @api_view(["GET","POST"])
+# @csrf_exempt
+# def UserLogin(requests):
     
-    username = requests.POST['username']
-    password = requests.POST['password']
-    password = password.encode('utf-8')
+#     username = requests.POST['username']
+#     password = requests.POST['password']
+#     password = password.encode('utf-8')
     
-    try:    
-        instructor = models.User.objects.get(UserName = username)
-        inspassword = instructor.password.encode('utf-8')
-        if bcrypt.checkpw(password, inspassword):#checkking the password
+#     try:    
+#         instructor = models.User.objects.get(UserName = username)
+#         inspassword = instructor.password.encode('utf-8')
+#         if bcrypt.checkpw(password, inspassword):#checkking the password
             
-            return Response({'bool':True,'msg':"Welcome",'Userid':instructor.id},status=status.HTTP_201_CREATED)
-        else:
-            return Response({'bool':False,'msg':"Incorrect Credentials"}, status=status.HTTP_400_BAD_REQUEST)
-    except:
-        return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
+#             return Response({'bool':True,'msg':"Welcome",'Userid':instructor.id},status=status.HTTP_201_CREATED)
+#         else:
+#             return Response({'bool':False,'msg':"Incorrect Credentials"}, status=status.HTTP_400_BAD_REQUEST)
+#     except:
+#         return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
     
 

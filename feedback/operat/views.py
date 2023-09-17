@@ -18,6 +18,7 @@ from .validations import custom_validation, validate_email, validate_password
 from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
+from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
 # Create your views here.
 
 
@@ -75,7 +76,10 @@ def pracquestDetail(requests):
     #for retriving the data
     else:
         tasks = models.practical_questions.objects.all()
-        serializer = pracquestmodelSerializers(tasks,many=True)
+        filterset = PracticalQuestionFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = pracquestmodelSerializers(queryset,many=True)
 
         return Response(serializer.data)
 
@@ -99,7 +103,10 @@ def theoryquestDetail(requests):
     #for retriving the data
     else:
         tasks = models.theory_questions.objects.all()
-        serializer = TheorymodelSerializers(tasks,many=True)
+        filterset = TheoryQuestionFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = TheorymodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
 
@@ -127,7 +134,10 @@ def mapfacultyDetail(requests):
     #for retriving the data    
     else:
         tasks = models.Mapfaculty.objects.all()
-        serializer = FacultyMapmodelSerializers(tasks,many=True)
+        filterset = MapfacultyFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = FacultyMapmodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
 
@@ -152,7 +162,10 @@ def SubjectDetail(requests):
     #for retriving the data
     else:
         tasks = models.Subjects.objects.all()
-        serializer = SubjectmodelSerializers(tasks,many=True)
+        filterset = SubjectsFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = SubjectmodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
 
@@ -177,7 +190,10 @@ def FacultyDetail(requests):
     else:
 
         tasks = models.Faculty.objects.all()
-        serializer = FacultymodelSerializers(tasks,many=True)
+        filterset = FacultyFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = FacultymodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
     
