@@ -2,6 +2,8 @@ from django.contrib import admin
 from . import models as md
 
 # Register your models here.
+admin.site.register(md.AppUser)
+
 
 @admin.register(md.Subjects)
 class SubjectAdmin(admin.ModelAdmin):

@@ -2,14 +2,22 @@ from django.shortcuts import render,HttpResponse
 from django.db import models as mod
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers
-from rest_framework.decorators import api_view
+from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer
+from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from . import models
 from rest_framework.response import Response
 from rest_framework import status
 from anony.models import Theory_feedback,Practical_feedback
 import io
 from rest_framework.parsers import JSONParser
+from rest_framework.authentication import BasicAuthentication,SessionAuthentication
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.views import APIView
+from django.contrib.auth import get_user_model, login, logout
+from .validations import custom_validation, validate_email, validate_password
+from rest_framework import permissions
+from django.conf import settings
+User = settings.AUTH_USER_MODEL
 # Create your views here.
 
 
@@ -60,9 +68,10 @@ def pracquestDetail(requests):
         serializer = pracquestmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({"status":"posted succesfully"})
+            res = {"status":"posted succesfully"}
+            return Response(res,status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({"status":"Unsuccesfull"})
+            return Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
     else:
         tasks = models.practical_questions.objects.all()
@@ -83,9 +92,10 @@ def theoryquestDetail(requests):
         serializer = TheorymodelSerializers(requests.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({"status":"posted succesfully"})
+            res = {"status":"posted succesfully"}
+            return Response(res,status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({"status":"Unsuccesfull"})
+            return Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
     else:
         tasks = models.theory_questions.objects.all()
@@ -93,6 +103,9 @@ def theoryquestDetail(requests):
         
         return Response(serializer.data)
 
+
+# @authentication_classes([SessionAuthentication,BasicAuthentication])
+# @permission_classes([IsAuthenticated])
 @api_view(['GET',"POST"])    
 def mapfacultyDetail(requests):
     #For posting the data
@@ -106,10 +119,11 @@ def mapfacultyDetail(requests):
         # ##end
         serializer = FacultyMapmodelSerializers(data=requests.data)
         if serializer.is_valid():
-            serializer.save()
-            return JsonResponse({"status":"posted succesfully"})
+            serializer.save()#owner = requests.user
+            res = {"status":"posted succesfully"}
+            return Response(res,status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({"status":"Unsuccesfull"})
+            return Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data    
     else:
         tasks = models.Mapfaculty.objects.all()
@@ -131,9 +145,10 @@ def SubjectDetail(requests):
         serializer = SubjectmodelSerializers(requests.data)
         if serializer.is_valid():
             serializer.save()
-            return JsonResponse({"status":"posted succesfully"})
+            res = {"status":"posted succesfully"}
+            return Response(res,status=status.HTTP_201_CREATED)
         else:
-            return JsonResponse({"status":"Unsuccesfull"})
+            return Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
     else:
         tasks = models.Subjects.objects.all()
@@ -157,7 +172,7 @@ def FacultyDetail(requests):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
     else:
 
@@ -175,7 +190,7 @@ def Calculateavg(requests):
     # faculty = requests.POST['faculty']
     # year = requests.POST['year']
     # sem = requests.POST['sem']
-    cal = {}s
+    cal = {}
     practical_feedback = {}
     theory_feedback = {}
     if models.Faculty.objects.filter(faculty_name=faculty).exists():
@@ -202,4 +217,42 @@ def Calculateavg(requests):
         return JsonResponse(cal)
             
 
+#Authentication
+
+# For registration
+class UserRegister(APIView):
+	permission_classes = (permissions.AllowAny,)
+	def post(self, request):
+		clean_data = custom_validation(request.data)
+		serializer = UserRegisterSerializer(data=clean_data)
+		if serializer.is_valid(raise_exception=True):
+			user = serializer.create(clean_data)
+			if user:
+				return Response(serializer.data, status=status.HTTP_201_CREATED)
+		return Response(status=status.HTTP_400_BAD_REQUEST)
     
+
+#for LOGIN THE USER
+class UserLogin(APIView):
+	permission_classes = (permissions.AllowAny,)
+	authentication_classes = (SessionAuthentication,)
+	##
+	def post(self, request):
+		data = request.data
+		assert validate_email(data)
+		assert validate_password(data)
+		serializer = UserLoginSerializer(data=data)
+		if serializer.is_valid(raise_exception=True):
+			user = serializer.check_user(data)
+			login(request, user)
+			return Response(serializer.data, status=status.HTTP_200_OK)
+          
+# for logging out
+class UserLogout(APIView):
+	permission_classes = (permissions.AllowAny,)
+	authentication_classes = ()
+	def post(self, request):
+		logout(request)
+		return Response(status=status.HTTP_200_OK)
+
+#authentication ends

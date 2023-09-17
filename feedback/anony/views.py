@@ -1,37 +1,39 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from . import models
-from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers,UsermodelSerializers
+from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
 import bcrypt
 from django.views.decorators.csrf import csrf_exempt
+from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.decorators import api_view,permission_classes,authentication_classes
 # Create your views here.
 
 
-def anonySignup(request):
-    if request.method=="POST":
-        # Get the signup parameters2
-        print(request.data)
-        username=request.data['username']
-        email=request.data['email']
-        pass1=request.data['pass1']
+# def anonySignup(request):
+#     if request.method=="POST":
+#         # Get the signup parameters2
+#         print(request.data)
+#         username=request.data['username']
+#         email=request.data['email']
+#         pass1=request.data['pass1']
 
-        # check for wrong input
+#         # check for wrong input
          
-        if models.User.objects.filter(username=username).exists():
-           return JsonResponse({'handlelogin':"already exist user"})
-        else:
-            myuser = models.User.objects.create_user(username, email, pass1)
-            myuser.save()
-            return JsonResponse({'handlelogin':"done"})
+#         if models.User.objects.filter(username=username).exists():
+#            return JsonResponse({'handlelogin':"already exist user"})
+#         else:
+#             myuser = models.User.objects.create_user(username, email, pass1)
+#             myuser.save()
+#             return JsonResponse({'handlelogin':"done"})
 
-    else:
-        return JsonResponse({"user":"404 - Not found"})
+#     else:
+#         return JsonResponse({"user":"404 - Not found"})
     
 
-
+@permission_classes([AllowAny,])
 @api_view(['GET',"POST"])    
 def TheoryFeedback(requests):
     if requests.method == "POST":
@@ -45,7 +47,9 @@ def TheoryFeedback(requests):
         tasks = models.Theory_feedback.objects.all()
         serializer = theoryfeedbackmodelSerializers(tasks,many=True)
         return Response(serializer.data)
-        
+    
+
+@permission_classes([AllowAny,])       
 @api_view(['GET',"POST"])    
 def PracticalFeedback(requests):
     if requests.method == "POST":
@@ -60,27 +64,27 @@ def PracticalFeedback(requests):
         serializer = pracfeedbackmodelSerializers(tasks,many=True)
         return Response(serializer.data)
 
-
-@api_view(["POST","GET"])
-def usersignUp(request):
-    if request.method == 'POST':
-        tempdict = request.data.copy() # Empty initially
-        pwd = tempdict["password"]
-        bytePwd = pwd.encode('utf-8')
-        mySalt = bcrypt.gensalt()
-        pwd_hash = bcrypt.hashpw(bytePwd, mySalt)
-        tempdict['password'] = pwd_hash
-        print(tempdict)
-        serializer = UsermodelSerializers(data=tempdict)
+# @permission_classes([AllowAny,])
+# @api_view(["POST","GET"])
+# def usersignUp(request):
+#     if request.method == 'POST':
+#         tempdict = request.data.copy() # Empty initially
+#         pwd = tempdict["password"]
+#         bytePwd = pwd.encode('utf-8')
+#         mySalt = bcrypt.gensalt()
+#         pwd_hash = bcrypt.hashpw(bytePwd, mySalt)
+#         tempdict['password'] = pwd_hash
+#         print(tempdict)
+#         serializer = UsermodelSerializers(data=tempdict)
         
-        if serializer.is_valid():
-            serializer.save()
+#         if serializer.is_valid():
+#             serializer.save()
             
-            return Response({"bool:True"}, status=status.HTTP_201_CREATED)
-        else:
-            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-    else:
-        return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
+#             return Response({"bool:True"}, status=status.HTTP_201_CREATED)
+#         else:
+#             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+#     else:
+#         return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
 
     
 
