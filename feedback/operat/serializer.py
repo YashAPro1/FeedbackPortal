@@ -71,9 +71,9 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError("it cannot be greater that 8 or less than 1")
         return value
     
-class FacultyMapmodelSerializers(serializers.ModelSerializer):
+class FacultymodelSerializers(serializers.ModelSerializer):
     class Meta:
-        model = models.Mapfaculty
+        model = models.Faculty
         fields = "__all__"
 
 
