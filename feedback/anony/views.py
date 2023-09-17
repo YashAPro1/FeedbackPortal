@@ -34,10 +34,11 @@ from .filters import TheoryFilter,PracticalFilter
 #         return JsonResponse({"user":"404 - Not found"})
     
 
-@permission_classes([AllowAny,])
 @api_view(['GET',"POST"])    
+@authentication_classes([])
+@permission_classes([])
 def TheoryFeedback(requests):
-    if requests.method == "POST":
+    if requests.method == "POST":   
         serializer = theoryfeedbackmodelSerializers(requests.data)
         if serializer.is_valid():
             serializer.save()
@@ -54,8 +55,9 @@ def TheoryFeedback(requests):
         return Response(serializer.data)
     
 
-@permission_classes([AllowAny,])       
 @api_view(['GET',"POST"])    
+@authentication_classes([])
+@permission_classes([])     
 def PracticalFeedback(requests):
     if requests.method == "POST":
         serializer = pracfeedbackmodelSerializers(requests.data)

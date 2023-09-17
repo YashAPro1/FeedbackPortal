@@ -11,7 +11,7 @@ from anony.models import Theory_feedback,Practical_feedback
 import io
 from rest_framework.parsers import JSONParser
 from rest_framework.authentication import BasicAuthentication,SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated,IsAuthenticatedOrReadOnly
 from rest_framework.views import APIView
 from django.contrib.auth import get_user_model, login, logout
 from .validations import custom_validation, validate_email, validate_password
@@ -22,6 +22,8 @@ from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestio
 # Create your views here.
 
 
+
+# permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(["POST"])  
 def staffSignup(request):
     if request.method=="POST":
@@ -55,6 +57,8 @@ def staffSignup(request):
     
 
 
+
+# permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])    
 def pracquestDetail(requests):
     #For posting the data
@@ -83,6 +87,8 @@ def pracquestDetail(requests):
 
         return Response(serializer.data)
 
+
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])    
 def theoryquestDetail(requests):
     #For posting the data
@@ -113,6 +119,7 @@ def theoryquestDetail(requests):
 
 # @authentication_classes([SessionAuthentication,BasicAuthentication])
 # @permission_classes([IsAuthenticated])
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])    
 def mapfacultyDetail(requests):
     #For posting the data
@@ -141,6 +148,8 @@ def mapfacultyDetail(requests):
         
         return Response(serializer.data)
 
+
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])    
 def SubjectDetail(requests):
     #For posting the data
@@ -169,7 +178,9 @@ def SubjectDetail(requests):
         
         return Response(serializer.data)
 
+
 @api_view(['GET',"POST"])    
+# @permission_classes([IsAuthenticatedOrReadOnly])
 def FacultyDetail(requests):
     #For posting the data
     
@@ -196,7 +207,9 @@ def FacultyDetail(requests):
         serializer = FacultymodelSerializers(queryset,many=True)
         
         return Response(serializer.data)
-    
+
+
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])    
 def DepartmentDetail(requests):
     #For posting the data
@@ -225,7 +238,7 @@ def DepartmentDetail(requests):
         
         return Response(serializer.data)
     
-
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(["GET","POST"])
 def Calculateavg(requests):
     faculty = "Mrunali"
