@@ -2,14 +2,18 @@
     position: fixed;
     top: 0;
     height: 4rem;
-    background: white;
-    border-bottom: 0.1rem solid var(--som-dark);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(1rem);
+    /* background: rgb(92, 92, 92); */
+    /* border-bottom: 0.13rem solid var(--som-dark); */
     padding: 0.3rem;
     width: 100%;
+    z-index: 100;
 }
 
 .somLogo {
     width: 2.8rem;
+    mix-blend-mode: multiply;
 }
 
 .kjsit {
@@ -28,10 +32,7 @@
     height: 3rem;
 }
 
-.fpHead{
+.fpHead {
     text-decoration: underline;
     text-decoration-color: black;
 }
-
-
-

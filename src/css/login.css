@@ -1,27 +1,28 @@
 .loginC {
-    background: rgb(255, 254, 251);
-    border: 0.15rem solid var(--somColor);
-    box-shadow: 0 0 1rem 0rem rgba(255, 100, 100, 0.5);
+    background: rgba(255, 254, 251, 0.3);
+    /* border: 0.15rem solid var(--somColor); */
+    box-shadow: 0 0 0.05rem 0.2rem rgba(173, 0, 0, 0.4);
     padding: 2rem;
-    border-radius: 0.3rem;
+    border-radius: 0.5rem;
     gap: 1rem;
-    animation: anLogC 3s linear infinite;
+    backdrop-filter: blur(2rem);
+    /* animation: anLogC 3s linear infinite; */
 }
 
 @keyframes anLogC {
     0% {
         box-shadow: 0 0 0.1rem 0.3rem transparent;
-        border: 0.2rem solid rgb(255, 1, 1);
+        border: 0.2rem solid rgb(255, 146, 146);
     }
 
     50% {
-        box-shadow: 0 0 1rem 0.1rem rgba(255, 1, 1, 0.5);
-        border: 0.2rem solid var(--somColor);
+        box-shadow: 0 0 1rem 0.1rem rgba(255, 1, 1, 0.377);
+        border: 0.2rem solid rgb(177, 40, 40);
     }
 
     100% {
         box-shadow: 0 0 0.1rem 0.3rem transparent;
-        border: 0.2rem solid rgb(255, 1, 1);
+        border: 0.2rem solid rgb(255, 146, 146);
     }
 }
 

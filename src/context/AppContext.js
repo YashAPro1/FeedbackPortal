@@ -15,12 +15,12 @@ export default function AppProvider({ children }) {
     useEffect(() => {
         const cData = cookies.get("user");
         if (cData) {
-                // if (fullLocation.pathname == "/login" || fullLocation.pathname === "/login/details") {
-                //     navigate("/");
-                // }
+            // if (fullLocation.pathname == "/login" || fullLocation.pathname === "/login/details") {
+            //     navigate("/");
+            // }
         }
         else {
-            navigate("/login");
+            // navigate("/login");
         }
     }, [fullLocation.pathname])
 

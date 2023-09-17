@@ -62,7 +62,15 @@ body {
     /* box-shadow: 0 -100vh 0 100vh var(--lightSomColor); */
 }
 
-button{
+input {
+    border: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+button {
     border: none;
     outline: none;
     background: none;
@@ -70,13 +78,19 @@ button{
     cursor: pointer;
 }
 
-button:hover{
+button:hover {
     opacity: 0.8;
 }
 
-button:disabled{
+button:disabled {
     cursor: not-allowed;
     opacity: 0.8;
+
+}
+
+.tL {
+    text-align: left;
+    width: 100%;
 }
 
 .fullbg {
@@ -86,6 +100,7 @@ button:disabled{
     /* padding:1rem; */
     /* gap: 0.5rem; */
     padding-top: var(--pTop);
+    padding-bottom: 1rem;
 }
 
 .divf {
@@ -94,16 +109,16 @@ button:disabled{
     align-items: center;
 }
 
-.fullWH{
+.fullWH {
     min-height: 100vh;
     width: 100%;
 }
 
-.wFull{
+.wFull {
     width: 100%;
 }
 
-.headT{
+.headT {
     background: rgb(255, 239, 210);
     padding: 0.5rem;
     font-weight: 600;
@@ -119,15 +134,15 @@ button:disabled{
 
 /* font size */
 
-.f1-2{
+.f1-2 {
     font-size: 1.2rem;
 }
 
-.f1-5{
+.f1-5 {
     font-size: 1.5rem;
 }
 
-.f2{
+.f2 {
     font-size: 2rem;
 }
 
@@ -135,36 +150,43 @@ button:disabled{
 /* finish font size */
 
 /* gap */
-.gapS{
+.gapS {
     gap: 0.3rem;
 }
 
-.gapSM{
+.gapSM {
     gap: 0.5rem;
 }
 
 /* gap ends */
 
 /*  */
-.mUpM{
+.mUpM {
     margin-top: 1rem;
 }
 
 /*  */
 
 
-.specIns{
-    padding: 0.2rem;
-    font-size: 1rem;
+.specIns {
+    padding: 0.4rem;
+    font-size: 1.1rem;
     border-radius: 0.3rem;
 }
 
-.specBut{
-    padding: 0.3rem;
-    border: 0.18rem solid var(--somColor);
+.specIns:focus {
+    outline: 0.2rem solid var(--som-dark);
+}
+
+.specBut {
+    padding: 0.4rem;
+    /* border: 0.18rem solid var(--somColor); */
+    background: var(--som-dark);
     border-radius: 0.3rem;
     font-size: 1.1rem;
-    background: white;
+    /* background: white; */
+    color: white;
+    border-radius: 0.3rem;
 }
 
 .pLeft {
@@ -181,7 +203,7 @@ button:disabled{
 }
 
 .infoC {
-    background: rgba(235, 177, 177, 0.25);
+    background: rgba(250, 212, 212, 0.5);
     /* margin: 0.5rem 1rem; */
     width: 100%;
     border-radius: 0.4rem;
@@ -189,8 +211,10 @@ button:disabled{
     row-gap: 0.5rem;
     column-gap: 10rem;
     justify-content: start;
-    padding: 0.4rem 0.5rem;
-    font-size: 1.1rem;
+    padding: 0.5rem 0.5rem;
+    font-size: 1.2rem;
+    backdrop-filter: blur(1rem);
+    margin: 0.5rem;
 }
 
 .infP span {
@@ -205,7 +229,8 @@ button:disabled{
 .sliderSub {
     position: fixed;
     left: 0;
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(1rem);
     /* margin: 0.5rem 1rem; */
     width: 10rem;
     height: 100%;
@@ -216,13 +241,14 @@ button:disabled{
     font-size: 1.1rem;
     /* gap: 0.8rem; */
     overflow-y: auto;
-    overflow-x:hidden;
+    overflow-x: hidden;
     /* border-right: 0.2rem solid var(--somColor); */
-    box-shadow: 0.1rem 0.1rem 0.3rem var(--somTColor);
+    box-shadow: 0.1rem 0.3rem 0.5rem #005baa88;
 }
 
 .sliderSec {
-    background: rgb(204, 204, 204);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1rem);
     /* padding: 0.5rem; */
     width: 100%;
     gap: 0.5rem;
@@ -230,6 +256,7 @@ button:disabled{
     /* overflow: hidden; */
     border: 0.1rem solid rgb(100, 100, 100);
     margin: 0.8rem 0;
+    z-index: 1;
     /* overflow: auto; */
 }
 
@@ -245,6 +272,7 @@ button:disabled{
     width: 100%;
     background: none;
     border-radius: 0.3rem;
+    /* z-index: 1; */
     /* background: wheat; */
 }
 
@@ -262,15 +290,16 @@ button:disabled{
     /* color: var(--somColor); */
 }
 
-.indSub:hover{
+.indSub:hover {
     background: #005baa31;
 }
 
-.divIndS .hovP{
+.divIndS .hovP {
     display: none;
     position: absolute;
     /* left: 10rem; */
     top: calc(100% + 0.5rem);
+    /* left: 10rem; */
     background: white;
     box-shadow: 0 0 0.1rem grey;
     z-index: 10;
@@ -280,12 +309,13 @@ button:disabled{
     transform: translateY(3rem);
     opacity: 0;
     transition: 0.2s all ease-out;
-    z-index: 10;
+    z-index: 1000;
 }
 
-.divIndS:hover .hovP{
+.divIndS:hover .hovP {
     display: block;
     opacity: 1;
+    z-index: 1000;
     transform: translateY(0);
 }
 
@@ -294,7 +324,7 @@ button:disabled{
     color: white;
 }
 
-.ccSub:hover{
+.ccSub:hover {
     background: var(--somTColor);
 }
 
@@ -307,10 +337,23 @@ button:disabled{
     text-align: center;
     padding: 0.4rem;
     font-size: 1.3rem;
+    z-index: 1;
 }
 
 .fg1 {
     flex-grow: 1;
+}
+
+.fpNameS {
+    text-align: left;
+    margin-top: 1rem;
+    font-size: 1.2rem;
+    background: rgba(226, 0, 0, 0.5);
+    border-radius: 0.4rem;
+    color: white;
+    padding: 0.5rem 1rem;
+    backdrop-filter: blur(1rem);
+    width: 100%;
 }
 
 /* table questions */
@@ -319,12 +362,16 @@ button:disabled{
     height: 100%;
     /* overflow: auto; */
     margin: 1rem 0;
+    border-radius: 0.4rem;
+
+
 }
 
 .quesT table {
     width: 100%;
     height: 100%;
-    background: rgb(255, 255, 255);
+    background: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(1rem);
     text-align: center;
     /* border-radius: 0.4rem; */
     /* overflow: hidden; */
@@ -333,7 +380,7 @@ button:disabled{
 .quesT thead {
     background: var(--somColor);
     color: white;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
 }
 
 .quesT table,
@@ -351,7 +398,7 @@ button:disabled{
 }
 
 .quesText {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
 }
 
 
@@ -367,12 +414,47 @@ button:disabled{
     position: relative;
     padding: 0.2rem;
     border-radius: 0.2rem;
-    border: 0.13rem solid var(--somColor);
+    border-bottom: 0.13rem solid var(--somColor);
     box-shadow: inset 0 0 0.4rem rgb(255, 203, 203);
     width: 10rem;
     height: 2rem;
     overflow: hidden;
     cursor: text;
+    border: 0.13rem solid var(--somColor);
+    background: rgb(255, 243, 221);
+
+}
+
+.insDDone {
+    border: 0.13rem solid var(--somColor);
+    background: none;
+}
+
+.inputtedIns {}
+
+.inputtedIns::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 0.5rem;
+    height: 80%;
+    width: 0.12rem;
+    background: var(--som-dark);
+    animation: infinite 1s cursText;
+}
+
+@keyframes cursText {
+    0% {
+        transform: scale(1);
+    }
+
+    50% {
+        transform: scale(0);
+    }
+
+    100% {
+        transform: scale(1);
+    }
 }
 
 .insDCurr::after {

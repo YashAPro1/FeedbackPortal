@@ -1,0 +1,11 @@
+.gridTabs {
+    height: 30rem;
+    width: 90vw;
+    background: rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(1rem);
+    border-radius: 1rem;
+    border: none;
+    outline: none;
+    overflow: hidden;
+    padding: 0.5rem;
+}

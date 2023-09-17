@@ -71,6 +71,7 @@ export default function Login() {
 
             <div className="divf fullbg fullWH">
                 <ToastContainer />
+                <div className="dashbgI"></div>
                 <div className="divf loginC fdirc">
                     <p className="f2 headT">Login</p>
                     <div className="divf divInsL gapSM mUpM">
