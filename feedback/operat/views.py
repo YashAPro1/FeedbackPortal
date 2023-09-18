@@ -18,6 +18,7 @@ from .validations import custom_validation, validate_email, validate_password
 from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
+from django.views.decorators.csrf import csrf_exempt
 from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
 # Create your views here.
 
@@ -161,11 +162,12 @@ def SubjectDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = SubjectmodelSerializers(python_data)
         # ##end
-        serializer = SubjectmodelSerializers(requests.data)
+        print(requests.data)
+        serializer = SubjectmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
-            res = {"status":"posted succesfully"}
-            return Response(res,status=status.HTTP_201_CREATED)
+            # res = {"status":"posted succesfully"}
+            return Response(status=status.HTTP_201_CREATED)
         else:
             return Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
@@ -210,7 +212,8 @@ def FacultyDetail(requests):
 
 
 # @permission_classes([IsAuthenticatedOrReadOnly])
-@api_view(['GET',"POST"])    
+# @csrf_exempt  
+@api_view(['GET',"POST"])  
 def DepartmentDetail(requests):
     #For posting the data
     
@@ -220,7 +223,7 @@ def DepartmentDetail(requests):
         # stream = io.BytesIO(json_data)
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultymodelSerializers(python_data)
-        # ##end
+        # ##end6
         serializer = DepartmentmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
@@ -229,15 +232,14 @@ def DepartmentDetail(requests):
             Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
     #for retriving the data
     else:
-
-        tasks = models.Faculty.objects.all()
+        tasks = models.Department.objects.all()
         filterset = DepartmentFilter(requests.GET, queryset=tasks)
         if filterset.is_valid():
          queryset = filterset.qs
         serializer = DepartmentmodelSerializers(queryset,many=True)
-        
+        print(serializer.data)
         return Response(serializer.data)
-    
+
 # @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(["GET","POST"])
 def Calculateavg(requests):
@@ -287,7 +289,7 @@ class UserRegister(APIView):
 			if user:
 				return Response(serializer.data, status=status.HTTP_201_CREATED)
 		return Response(status=status.HTTP_400_BAD_REQUEST)
-    
+
 
 #for LOGIN THE USER
 class UserLogin(APIView):
@@ -303,7 +305,7 @@ class UserLogin(APIView):
 			user = serializer.check_user(data)
 			login(request, user)
 			return Response(serializer.data, status=status.HTTP_200_OK)
-          
+      
 # for logging out
 class UserLogout(APIView):
 	permission_classes = (permissions.AllowAny,)

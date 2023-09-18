@@ -6,7 +6,7 @@ from . import models
 class SubjectsFilter(django_filters.FilterSet):
     class Meta:
         model = models.Subjects
-        fields =["subject","semester"]
+        fields =["semester", "department"]
 
 #This is filter class for filtering data in faculty
 class FacultyFilter(django_filters.FilterSet):
