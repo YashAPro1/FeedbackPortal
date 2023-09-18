@@ -7,7 +7,7 @@ admin.site.register(md.AppUser)
 
 @admin.register(md.Subjects)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ["id","subject","semester"]
+    list_display = ["id","subject","semester","faculty"]
 
 @admin.register(md.Faculty)
 class FacultyAdmin(admin.ModelAdmin):
