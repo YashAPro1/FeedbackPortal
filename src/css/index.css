@@ -144,6 +144,8 @@ button:disabled {
 .MuiButton-outlinedPrimary {
     border: 0.1rem solid var(--som-dark) !important;
     color: var(--som-dark) !important;
+    background: rgba(255, 255, 255, 0.747) !important;
+    backdrop-filter: blur(1rem) !important;
 }
 
 .MuiButton-containedPrimary {
@@ -569,4 +571,3 @@ button:disabled {
 }
 
 /*  */
-

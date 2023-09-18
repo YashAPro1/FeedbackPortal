@@ -10,9 +10,13 @@ import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import axios from "axios";
+import { notifyE, notifyS } from "../../funcs/func1";
+import { ToastContainer } from "react-toastify";
+import Cookies from "universal-cookie";
 // import AddIcon from '@mui/icons-material/Add';
 
 export default function ASubj() {
+    const cookies = new Cookies(null, { path: '/' });
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,6 +42,10 @@ export default function ASubj() {
     const [semN, setSemN] = useState();
     const [acadYear, setAcadY] = useState("2023-2024");
 
+    const [subjN, setSubjN] = useState();
+    const [dept2, setDept2] = useState();
+    const [sem2, setSem2] = useState();
+
     const [deptAll, setDeptAll] = useState();
     const [subjDat, setSubD] = useState({ rows: [], columns: [] });
 
@@ -52,8 +60,11 @@ export default function ASubj() {
     }
 
     async function fetchSubj() {
-        console.log(semN);
-        await axios.get("http://localhost:8000/api/subject/", { semester: semN })
+        if (!semN || !deptN) {
+            notifyE("Please provide all inputs for query!");
+            return;
+        }
+        await axios.get(`http://localhost:8000/api/subject/?semester=${semN}&department=${deptN}`)
             .then((res) => {
                 // setSubD(res.data);
                 var dubD = { ...subjDat };
@@ -81,13 +92,36 @@ export default function ASubj() {
     // };
 
     async function addSubj() {
+        if (!dept2 || !sem2) {
+            notifyE("Please fill All Details!")
+            return;
+        }
+        else {
+            await axios.post("http://localhost:8000/api/subject/", { "subject": subjN, "semester": sem2, "department": dept2 }, { withCredentials: true },
+                {
+                    headers: {
+                        'X-CSRFToken': cookies.get('csrftoken')
+                    }
+                })
+                .then((res) => {
+                    // console.log(res);
+                    notifyS({ msg: "Subject has been added successfully!" })
+                    setOpen(false);
+                    fetchSubj();
+                })
+                .catch((err) => {
+                    console.log(err);
+                    notifyE("Some error occurred!");
+                })
 
+        }
     }
 
     return (
         <>
             <Navbar />
             <div className="divf fdirc fullbg dashMain">
+                <ToastContainer />
                 <div className="dashbgI"></div>
                 <p className="uTypeN">Admin Dashboard</p>
                 <section className="paddM">
@@ -167,14 +201,45 @@ export default function ASubj() {
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Add Subject
                                 </Typography>
-                                <TextField id="filled-basic" label="Subject Name" size="small" />
-                                <TextField id="filled-basic" label="Department" defaultValue={deptN} InputProps={{
-                                    readOnly: true,
-                                }}
-                                    size="small" />
-                                <TextField id="filled-basic" label="Semester" size="small" defaultValue={semN} InputProps={{
-                                    readOnly: true,
-                                }} />
+                                <TextField id="filled-basic" label="Subject Name" size="small" value={subjN} onChange={(e) => setSubjN(e.target.value)} />
+                                {/* <TextField id="filled-basic" label="Semester" size="small" value={sem2} onChange={(e) => { setSem2(e.target.value) }} /> */}
+                                <FormControl sx={{ minWidth: 120 }} size="small">
+                                    <InputLabel id="demo-select-small-label">Semester</InputLabel>
+                                    <Select
+                                        labelId="demo-select-small-label"
+                                        // id="demo-select-small"
+                                        value={sem2}
+                                        label="Semester"
+                                        onChange={(e) => { setSem2(e.target.value) }}
+                                    >
+                                        <MenuItem value={1}>1</MenuItem>
+                                        <MenuItem value={2}>2</MenuItem>
+                                        <MenuItem value={3}>3</MenuItem>
+                                        <MenuItem value={4}>4</MenuItem>
+                                        <MenuItem value={5}>5</MenuItem>
+                                        <MenuItem value={6}>6</MenuItem>
+                                        <MenuItem value={7}>7</MenuItem>
+                                        <MenuItem value={8}>8</MenuItem>
+                                        <MenuItem value={9}>9</MenuItem>
+                                        <MenuItem value={10}>10</MenuItem>
+                                    </Select>
+                                </FormControl>
+                                <FormControl sx={{ minWidth: 120 }} size="small">
+                                    <InputLabel id="demo-select-small-label">Department</InputLabel>
+                                    <Select
+                                        labelId="demo-select-small-label"
+                                        // id="demo-select-small"
+                                        value={dept2}
+                                        label="Department"
+                                        onChange={(e) => { setDept2(e.target.value) }}
+                                    >
+                                        {deptAll && deptAll.map((el) => {
+                                            return (
+                                                <MenuItem value={el.name}>{el.name}</MenuItem>
+                                            )
+                                        })}
+                                    </Select>
+                                </FormControl>
                                 <Button variant="contained" onClick={addSubj}>Save</Button>
                             </Box>
                         </Modal>

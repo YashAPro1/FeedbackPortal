@@ -9,6 +9,7 @@ import BarC from "./components/charts/BarC";
 import ADept from "./views/Admin/ADept";
 import ASubj from "./views/Admin/ASubj";
 import AFacult from "./views/Admin/AFacult";
+import ALogin from "./components/ALogin";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route exact path="/login" element={<Login />} />
           <Route exact path="/login/details" element={<LoginDet />} />
           <Route exact path="/admin" element={<ADash />} />
+          <Route exact path="/admin/login" element={<ALogin />} />
           <Route exact path="/admin/departments" element={<ADept />} />
           <Route exact path="/admin/subjects" element={<ASubj />} />
           <Route exact path="/admin/faculties" element={<AFacult />} />

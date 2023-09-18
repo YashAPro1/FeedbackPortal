@@ -12,9 +12,11 @@ import { FormControl, InputLabel, MenuItem, Select, TextField } from "@mui/mater
 import axios from "axios";
 import { notifyE, notifyS } from "../../funcs/func1";
 import { ToastContainer } from "react-toastify";
+import Cookies from "universal-cookie";
 // import AddIcon from '@mui/icons-material/Add';
 
 export default function AFacult() {
+    const cookies = new Cookies(null, { path: '/' });
     const style = {
         position: 'absolute',
         top: '50%',
@@ -40,6 +42,8 @@ export default function AFacult() {
     const [facName, setFacName] = useState();
     const [deptN, setDeptN] = useState();
 
+    const [deptI, setDeptI] = useState();
+
     const [deptAll, setDeptAll] = useState();
 
     async function fetchDept() {
@@ -61,7 +65,11 @@ export default function AFacult() {
     };
 
     async function fetchFact() {
-        await axios.get("http://localhost:8000/api/faculty")
+        if (!deptI) {
+            notifyE("Please provide department!");
+            return;
+        }
+        await axios.get(`http://localhost:8000/api/faculty/?department=${deptI}`)
             .then((res) => {
                 console.log(res.data);
                 var dubD = { ...factDat };
@@ -80,7 +88,7 @@ export default function AFacult() {
 
     useEffect(() => {
 
-        fetchFact();
+        // fetchFact();
         fetchDept();
     }, []);
 
@@ -90,7 +98,12 @@ export default function AFacult() {
             return;
         }
         else {
-            axios.post("http://localhost:8000/api/faculty/", { "faculty_name": facName, "department": deptN })
+            axios.post("http://localhost:8000/api/faculty/", { "faculty_name": facName, "department": deptN }, { withCredentials: true },
+                {
+                    headers: {
+                        'X-CSRFToken': cookies.get('csrftoken')
+                    }
+                })
                 .then((res) => {
                     console.log(res);
                     notifyS({ msg: "Successfully created!" })
@@ -114,6 +127,33 @@ export default function AFacult() {
                 <div className="dashbgI"></div>
                 <p className="uTypeN">Admin Dashboard</p>
                 <section className="paddM">
+                    <form>
+                        <div className="divf fdirc comBox gapM">
+                            <p className="tL f1-2"><b>Provide the specified inputs to view all Faculties for the same</b></p>
+                            <div className="divf wFull jusSB">
+                                <div className="divf fwrap jusStart wFull gapM">
+                                    <FormControl sx={{ minWidth: 120 }} size="small">
+                                        <InputLabel id="demo-select-small-label">Department</InputLabel>
+                                        <Select
+                                            labelId="demo-select-small-label"
+                                            // id="demo-select-small"
+                                            value={deptI}
+                                            label="Department"
+                                            onChange={(e) => { setDeptI(e.target.value) }}
+                                        >
+                                            {deptAll && deptAll.map((el) => {
+                                                return (
+                                                    <MenuItem value={el.name}>{el.name}</MenuItem>
+                                                )
+                                            })}
+                                        </Select>
+                                    </FormControl>
+                                </div>
+                                <Button variant="contained" onClick={fetchFact}>Find</Button>
+                            </div>
+
+                        </div>
+                    </form>
                     <div className="divf jusSB">
                         <p className="dashTT1">Faculties data</p>
                         <Button className="muiButOut" variant="outlined" endIcon={<AddCircleRounded />} onClick={handleOpen}>Add Faculty</Button>

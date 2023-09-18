@@ -12,9 +12,11 @@ import { TextField } from "@mui/material";
 import axios from "axios";
 import { ToastContainer } from "react-toastify";
 import { notifyE, notifyS } from "../../funcs/func1";
+import Cookies from "universal-cookie";
 // import AddIcon from '@mui/icons-material/Add';
 
 export default function ADept() {
+    const cookies = new Cookies(null, { path: '/' });
     const style = {
         position: 'absolute',
         top: '50%',
@@ -38,9 +40,14 @@ export default function ADept() {
     const [dName, setDname] = useState("");
 
     async function fetchDept() {
-        axios.get("http://localhost:8000/api/department")
+        axios.get("http://localhost:8000/api/department/", { withCredentials: true },
+            {
+                headers: {
+                    'X-CSRFToken': cookies.get('csrftoken')
+                }
+            })
             .then((res) => {
-                // console.log(res.data);
+                console.log(res.data);
                 var dubD = { ...deptD };
                 dubD.rows = res.data;
                 dubD.columns = [
@@ -65,9 +72,13 @@ export default function ADept() {
             return;
         }
         else {
-            axios.post("http://localhost:8000/api/department/", { "name": dName })
+            axios.post("http://localhost:8000/api/department/", { "name": dName }, { withCredentials: true },
+                {
+                    headers: {
+                        'X-CSRFToken': cookies.get('csrftoken')
+                    }
+                })
                 .then((res) => {
-                    // console.log(res);
                     setDname();
                     notifyS({ msg: "Successfully created!" })
                     setOpen(false);
