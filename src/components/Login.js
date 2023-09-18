@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'universal-cookie';
+import { notifyE, notifyS } from "../funcs/func1";
 
 export default function Login() {
 
@@ -19,40 +20,40 @@ export default function Login() {
         return document.getElementById(idname);
     }
 
-    const notifyS = () => toast.success('Login Successfull', {
-        position: "top-right",
-        autoClose: 5000,
-        hideProgressBar: true,
-        closeOnClick: true,
-        pauseOnHover: false,
-        draggable: false,
-        progress: undefined,
-        theme: "colored",
-    });
+    // const notifyS = () => toast.success('Login Successfull', {
+    //     position: "top-right",
+    //     autoClose: 5000,
+    //     hideProgressBar: true,
+    //     closeOnClick: true,
+    //     pauseOnHover: false,
+    //     draggable: false,
+    //     progress: undefined,
+    //     theme: "colored",
+    // });
 
-    function notifyE(errM) {
-        toast.error(errM, {
-            position: "top-right",
-            autoClose: 5000,
-            hideProgressBar: true,
-            closeOnClick: true,
-            pauseOnHover: false,
-            draggable: false,
-            progress: undefined,
-            theme: "colored",
-        });
-    }
+    // function notifyE(errM) {
+    //     toast.error(errM, {
+    //         position: "top-right",
+    //         autoClose: 5000,
+    //         hideProgressBar: true,
+    //         closeOnClick: true,
+    //         pauseOnHover: false,
+    //         draggable: false,
+    //         progress: undefined,
+    //         theme: "colored",
+    //     });
+    // }
 
     const doLogin = async () => {
         if (user1 === "comph" && pass1 === "1234") {
-            notifyS();
+            notifyS({ msg: "Successful" });
             cookies.set("user", user1, { maxAge: 1800 })
             retId("idDoLog").setAttribute("disabled", "disabled");
             await timer(500);
             navigate("/login/details");
         }
         else if (user1 === "compl" && pass1 === "1234") {
-            notifyS();
+            notifyS({ msg: "Successful" });
             cookies.set("user", user1, { maxAge: 1800 });
             retId("idDoLog").setAttribute("disabled", "disabled");
             await timer(500);

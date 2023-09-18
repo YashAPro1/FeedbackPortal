@@ -5,7 +5,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Rubik', sans-serif;
-    font-weight: 500;
+    /* font-weight: 500; */
     -webkit-user-select: none;
     /* Safari */
     -moz-user-select: none;
@@ -109,6 +109,10 @@ button:disabled {
     align-items: center;
 }
 
+.fwrap {
+    flex-wrap: wrap;
+}
+
 .fullWH {
     min-height: 100vh;
     width: 100%;
@@ -132,41 +136,33 @@ button:disabled {
     justify-content: space-between;
 }
 
-/* font size */
-
-.f1-2 {
-    font-size: 1.2rem;
-}
-
-.f1-5 {
-    font-size: 1.5rem;
-}
-
-.f2 {
-    font-size: 2rem;
-}
-
-
-/* finish font size */
-
-/* gap */
-.gapS {
-    gap: 0.3rem;
-}
-
-.gapSM {
-    gap: 0.5rem;
-}
-
-/* gap ends */
-
-/*  */
-.mUpM {
-    margin-top: 1rem;
+.jusStart {
+    justify-content: start;
 }
 
 /*  */
+.MuiButton-outlinedPrimary {
+    border: 0.1rem solid var(--som-dark) !important;
+    color: var(--som-dark) !important;
+}
 
+.MuiButton-containedPrimary {
+    /* border: 0.1rem solid var(--som-dark) !important; */
+    background: var(--som-dark) !important;
+    color: white !important;
+}
+
+.comBox {
+    background: rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(1rem);
+    border-radius: 0.4rem;
+    width: 100%;
+    padding: 0.5rem;
+    margin: 0.5rem 0;
+    gap: 0.4rem;
+}
+
+/*  */
 
 .specIns {
     padding: 0.4rem;
@@ -529,3 +525,48 @@ button:disabled {
 .posR {
     position: relative;
 }
+
+/* font size */
+
+.f1-2 {
+    font-size: 1.2rem;
+}
+
+.f1-5 {
+    font-size: 1.5rem;
+}
+
+.f2 {
+    font-size: 2rem;
+}
+
+
+/* finish font size */
+
+/* padding */
+.paddM {
+    padding: 1.5rem;
+}
+
+/* gap */
+.gapS {
+    gap: 0.3rem;
+}
+
+.gapSM {
+    gap: 0.5rem;
+}
+
+.gapM {
+    gap: 1rem;
+}
+
+/* gap ends */
+
+/*  */
+.mUpM {
+    margin-top: 1rem;
+}
+
+/*  */
+

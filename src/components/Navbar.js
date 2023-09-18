@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import "../css/navbar.css";
 import somLogo from "../img/somaiyaLogo.jpg";
 import somTrust from "../img/somaiyaTrust.png";
@@ -14,7 +15,7 @@ export default function Navbar() {
                     </div>
                 </div>
                 <div className=" fg1 ">
-                    <h2 className="fpHead">Faculty Feedback Portal</h2>
+                    <Link className="fpHead" to="/" >Faculty Feedback Portal</Link>
                 </div>
                 <img src={somTrust} className="somTrust" />
             </div>

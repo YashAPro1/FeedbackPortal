@@ -8,6 +8,7 @@
 
     min-height: 100vh;
     width: 100%;
+    padding-top: 6.5rem;
 }
 
 .dashbgI {
@@ -52,7 +53,6 @@
     width: 100%;
     padding: 1rem;
     /* background: red; */
-    margin-top: 2.5rem;
 }
 
 .uTypeN {
@@ -120,7 +120,7 @@
     transition: 0.2s all ease-out;
 }
 
-.dashTT1{
+.dashTT1 {
     background: rgba(255, 255, 255, 0.76);
     backdrop-filter: blur(1rem);
     text-align: center;
@@ -132,4 +132,8 @@
     margin: 0.5rem 0;
 }
 
+.modNewIns {
+    background: rgba(255, 255, 255, 0.76);
+    backdrop-filter: blur(1rem);
 
+}
