@@ -59,9 +59,9 @@ DEBUG=True
 DATABASE_URL=your_database_url
 ```
 
-# Add other necessary environment variables
+### Add other necessary environment variables
 
-### Apply database migrations:
+#### Apply database migrations:
 
 ```shell
 python manage.py migrate
