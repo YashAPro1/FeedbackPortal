@@ -1,4 +1,4 @@
-# Faculty Feedback System - Django Project
+# Faculty Feedback System - Django Rest Framework And ReactJS Project
 
 Project Logo
 
