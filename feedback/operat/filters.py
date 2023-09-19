@@ -38,4 +38,8 @@ class DepartmentFilter(django_filters.FilterSet):
         model = models.Department
         fields =["name"]
 
+class DivisionFilter(django_filters.FilterSet):
+    class Meta: 
+        model = models.Division
+        fields =["department"]
 

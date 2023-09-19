@@ -21,6 +21,10 @@ class MapfacultyAdmin(admin.ModelAdmin):
 class DepartmentAdmin(admin.ModelAdmin):
     list_display = ["id","name"]
 
+@admin.register(md.Division)
+class DivisionAdmin(admin.ModelAdmin):
+    list_display = ["id","name","department","num_pract_batch","num_tutorial_batch"]
+
 admin.site.register(md.theory_questions)
 
 

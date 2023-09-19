@@ -19,7 +19,7 @@ from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
 from django.views.decorators.csrf import csrf_exempt
-from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
+from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter,DivisionFilter
 # Create your views here.
 
 
@@ -234,6 +234,33 @@ def DepartmentDetail(requests):
     else:
         tasks = models.Department.objects.all()
         filterset = DepartmentFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = DepartmentmodelSerializers(queryset,many=True)
+        print(serializer.data)
+        return Response(serializer.data)
+    
+@api_view(['GET',"POST"])  
+def DivisionDetail(requests):
+    #For posting the data
+    
+    if requests.method == 'POST':
+         # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = FacultymodelSerializers(python_data)
+        # ##end6
+        serializer = DivisionDetail(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
+    #for retriving the data
+    else:
+        tasks = models.Division.objects.all()
+        filterset = DivisionFilter(requests.GET, queryset=tasks)
         if filterset.is_valid():
          queryset = filterset.qs
         serializer = DepartmentmodelSerializers(queryset,many=True)

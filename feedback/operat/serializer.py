@@ -84,6 +84,13 @@ class DepartmentmodelSerializers(serializers.ModelSerializer):
         fields = "__all__"
     def create(self,validate_data):
         return  models.Department.objects.create(**validate_data)
+    
+class DivisionmodelSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.Division
+        fields = "__all__"
+    def create(self,validate_data):
+        return  models.Division.objects.create(**validate_data)
 
 #Serializer for all Subjects
 class SubjectmodelSerializers(serializers.ModelSerializer):

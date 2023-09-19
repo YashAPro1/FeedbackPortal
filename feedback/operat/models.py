@@ -129,6 +129,12 @@ class Department(models.Model):
     def __str__(self):
         return self.name
     
+class Division(models.Model):
+    name = models.CharField(max_length=50)
+    num_pract_batch = models.IntegerField();
+    num_tutorial_batch = models.IntegerField();
+    department = models.ForeignKey(Department,on_delete=models.CASCADE);
+    
 class Calculatedtheory(models.Model):
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
