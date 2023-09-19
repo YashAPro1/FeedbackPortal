@@ -132,7 +132,9 @@ def mapfacultyDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultyMapmodelSerializers(data=python_data)
         # ##end
+        print(requests.data);
         serializer = FacultyMapmodelSerializers(data=requests.data)
+        print(serializer)
         if serializer.is_valid():
             serializer.save()#owner = requests.user
             res = {"status":"posted succesfully"}

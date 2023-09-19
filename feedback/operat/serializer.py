@@ -67,7 +67,7 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
     #     instance.sem = validated_data.get("sem",instance.sem)
     
     def validate_sem(self,value):
-        if value>8 or value<1:
+        if value>10 or value<1:
             raise serializers.ValidationError("it cannot be greater that 8 or less than 1")
         return value
     
