@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'universal-cookie';
 import { notifyE, notifyS } from "../funcs/func1";
 import axios from "axios";
+import CSRFToken from "../views/Admin/CSRFToken";
 
 
 export default function ALogin() {
@@ -23,7 +24,13 @@ export default function ALogin() {
     }
 
     const doLogin = async () => {
-        await axios.post("http://localhost:8000/api/login/", { email: "yash@gmail.com", username: user1, password: pass1 })
+        await axios.post("http://localhost:8000/api/login/",{ email: "yash@gmail.com", username: user1, password: pass1 },
+        {
+            headers: {
+                'Content-Type':'application/json',
+                'X-CSRFToken': cookies.get('csrftoken')
+            }
+        })
             .then((res) => {
                 // setDname();
                 notifyS({ msg: "Successfully created!" })
@@ -62,6 +69,7 @@ export default function ALogin() {
             <div className="divf fullbg fullWH">
                 <ToastContainer />
                 <div className="dashbgI"></div>
+                <CSRFToken/>
                 <div className="divf loginC fdirc">
                     <p className="f2 headT">Login</p>
                     <div className="divf divInsL gapSM mUpM">
