@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from django.db import models as mod
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers
+from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers,DivisionmodelSerializers
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from . import models
 from rest_framework.response import Response
@@ -239,7 +239,8 @@ def DepartmentDetail(requests):
         serializer = DepartmentmodelSerializers(queryset,many=True)
         print(serializer.data)
         return Response(serializer.data)
-    
+
+# @permission_classes([IsAuthenticatedOrReadOnly])
 @api_view(['GET',"POST"])  
 def DivisionDetail(requests):
     #For posting the data
@@ -251,7 +252,7 @@ def DivisionDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultymodelSerializers(python_data)
         # ##end6
-        serializer = DivisionDetail(data=requests.data)
+        serializer = DivisionmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -263,7 +264,7 @@ def DivisionDetail(requests):
         filterset = DivisionFilter(requests.GET, queryset=tasks)
         if filterset.is_valid():
          queryset = filterset.qs
-        serializer = DepartmentmodelSerializers(queryset,many=True)
+        serializer = DivisionmodelSerializers(queryset,many=True)
         print(serializer.data)
         return Response(serializer.data)
 

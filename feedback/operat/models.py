@@ -60,11 +60,23 @@ class AppUser(AbstractBaseUser, PermissionsMixin):
 
 
 
+class Department(models.Model):
+    name = models.CharField(max_length=50)
+    def __str__(self):
+        return self.name
+    
+class Division(models.Model):
+    name = models.CharField(max_length=50)
+    num_pract_batch = models.IntegerField();
+    num_tutorial_batch = models.IntegerField();
+    department = models.ForeignKey(Department,on_delete=models.CASCADE);
+    def __str__(self):
+        return self.name
     
 
 class Faculty(models.Model):
     faculty_name = models.CharField(max_length=200)
-    department = models.CharField(max_length=200)
+    department = models.ForeignKey(Department,on_delete=models.CASCADE);
     # subject = models.CharField(max_length=200,null=True)
     def __str__(self):
         return self.faculty_name
@@ -72,7 +84,7 @@ class Faculty(models.Model):
 class Subjects(models.Model):
     subject = models.CharField(max_length=200,null=True)
     semester = models.CharField(max_length=200,null=True)
-    department = models.CharField(max_length=200,null=True)
+    department = models.ForeignKey(Department,on_delete=models.CASCADE);
     # faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,null=True)
     def __str__(self):
         return self.subject 
@@ -81,15 +93,15 @@ class Subjects(models.Model):
 class Mapfaculty(models.Model):
     sem = models.IntegerField()
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)
-    department = models.CharField(max_length=200)
+    department = models.ForeignKey(Department,on_delete=models.CASCADE);
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
-    divison = models.CharField(max_length=200)
+    division = models.ForeignKey(Division,on_delete=models.CASCADE);
     theory = models.IntegerField(default=0)
     practical = models.IntegerField(default=0)
     tutorial = models.IntegerField()
     practical_batch = models.IntegerField()
     tutorial_batch = models.IntegerField()
-    year = models.IntegerField(default=datetime.date.today().year)
+    year = models.CharField(max_length=200)
 
     def __str__(self):
         return f"Semester {self.sem} Year {self.year}"
@@ -124,16 +136,6 @@ class practical_questions(models.Model):
 
 # print(practical_questions.objects.aggregate(models.Avg("option1")))
 
-class Department(models.Model):
-    name = models.CharField(max_length=50)
-    def __str__(self):
-        return self.name
-    
-class Division(models.Model):
-    name = models.CharField(max_length=50)
-    num_pract_batch = models.IntegerField();
-    num_tutorial_batch = models.IntegerField();
-    department = models.ForeignKey(Department,on_delete=models.CASCADE);
     
 class Calculatedtheory(models.Model):
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE)

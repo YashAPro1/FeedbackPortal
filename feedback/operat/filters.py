@@ -18,7 +18,7 @@ class FacultyFilter(django_filters.FilterSet):
 class MapfacultyFilter(django_filters.FilterSet):
     class Meta:
         model = models.Mapfaculty
-        fields =["department","divison","faculty","subject"]
+        fields =["department","division","faculty","subject"]
 
 #This is filter class for filtering data in theory_questions
 class TheoryQuestionFilter(django_filters.FilterSet):
@@ -41,5 +41,5 @@ class DepartmentFilter(django_filters.FilterSet):
 class DivisionFilter(django_filters.FilterSet):
     class Meta: 
         model = models.Division
-        fields =["department"]
+        fields =["name","department"]
 
