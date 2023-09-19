@@ -19,6 +19,8 @@ from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
 from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.utils.decorators import method_decorator
 # Create your views here.
 
 
@@ -272,11 +274,52 @@ def Calculateavg(requests):
         cal["practical_feedback"] = practical_feedback
         cal["theory_feedback"] = theory_feedback
         return JsonResponse(cal)
-            
+
+@api_view(['GET',"POST"])  
+def DivisionDetail(requests):
+    #For posting the data
+    
+    if requests.method == 'POST':
+         # ##start
+        # json_data = requests.data
+        # stream = io.BytesIO(json_data)
+        # python_data = JSONParser.parse(stream=stream)
+        # serializer = FacultymodelSerializers(python_data)
+        # ##end6
+        serializer = DivisionDetail(data=requests.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
+    #for retriving the data
+    else:
+        tasks = models.Division.objects.all()
+        filterset = DepartmentFilter(requests.GET, queryset=tasks)
+        if filterset.is_valid():
+         queryset = filterset.qs
+        serializer = DepartmentmodelSerializers(queryset,many=True)
+        return Response(serializer.data)
 
 #Authentication
 
 # For registration
+
+class CheckAuthenticatedView(APIView):
+    def get(self, request, format=None):
+        user = self.request.user
+
+        try:
+            isAuthenticated = user.is_authenticated
+
+            if isAuthenticated:
+                return Response({ 'isAuthenticated': 'success' })
+            else:
+                return Response({ 'isAuthenticated': 'error' })
+        except:
+            return Response({ 'error': 'Something went wrong when checking authentication status' })
+
+@method_decorator(csrf_protect, name='dispatch')     
 class UserRegister(APIView):
 	permission_classes = (permissions.AllowAny,)
 	def post(self, request):
@@ -285,24 +328,33 @@ class UserRegister(APIView):
 		if serializer.is_valid(raise_exception=True):
 			user = serializer.create(clean_data)
 			if user:
-				return Response(serializer.data, status=status.HTTP_201_CREATED)
+				return Response({ 'Register': 'Success' }, status=status.HTTP_201_CREATED)
 		return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
 #for LOGIN THE USER
+@method_decorator(csrf_protect, name='dispatch')
 class UserLogin(APIView):
-	permission_classes = (permissions.AllowAny,)
-	authentication_classes = (SessionAuthentication,)
-	##
-	def post(self, request):
-		data = request.data
-		assert validate_email(data)
-		assert validate_password(data)
-		serializer = UserLoginSerializer(data=data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.check_user(data)
-			login(request, user)
-			return Response(serializer.data, status=status.HTTP_200_OK)
+    permission_classes = (permissions.AllowAny,)
+    authentication_classes = (SessionAuthentication,)
+    ##
+    def post(self, request):
+        data = request.data
+        assert validate_email(data)
+        assert validate_password(data)
+        serializer = UserLoginSerializer(data=data)
+        try:
+            if serializer.is_valid(raise_exception=True):
+                user = serializer.check_user(data)
+                if user is not None:
+                    login(request, user)
+                    return Response({ 'success': 'User authenticated' }, status=status.HTTP_200_OK)
+                else:
+                    return Response({ 'success': 'User authenticated' }, status=status.HTTP_200_OK)
+                # return Response(serializer.data, status=status.HTTP_200_OK)
+        except:
+            return Response({ 'error': 'Something went wrong when logging in' },status=status.HTTP_404_NOT_FOUND)
+
           
 # for logging out
 class UserLogout(APIView):
@@ -312,4 +364,11 @@ class UserLogout(APIView):
 		logout(request)
 		return Response(status=status.HTTP_200_OK)
 
+
+@method_decorator(ensure_csrf_cookie, name='dispatch')
+class GetCSRFToken(APIView):
+    permission_classes = (permissions.AllowAny, )
+
+    def get(self, request, format=None):
+        return Response({ 'success': 'CSRF cookie set' })
 #authentication ends

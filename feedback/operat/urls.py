@@ -11,9 +11,12 @@ urlpatterns = [
     path('subject/', views.SubjectDetail,name='Subject'),
     path('calculate/', views.Calculateavg,name='calculate'),
     path('department/', views.DepartmentDetail,name='department'),
+    path("division/", views.DivisionDetail,name="division"),
     #authentication
-    path('register', views.UserRegister.as_view(), name='register'),
-	path('login', views.UserLogin.as_view(), name='login'),
-	path('logout', views.UserLogout.as_view(), name='logout'),
+    path('authenticated/', views.CheckAuthenticatedView.as_view()),
+    path('register/', views.UserRegister.as_view(), name='register'),
+	path('login/', views.UserLogin.as_view(), name='login'),
+	path('logout/', views.UserLogout.as_view(), name='logout'),
+    path('csrf_cookie/', views.GetCSRFToken.as_view())
     ##end
-]
+]   

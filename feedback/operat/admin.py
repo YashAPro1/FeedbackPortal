@@ -25,6 +25,7 @@ admin.site.register(md.theory_questions)
 
 
 admin.site.register(md.practical_questions)
+admin.site.register(md.Division)
 
 
 
