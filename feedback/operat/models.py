@@ -83,8 +83,8 @@ class Mapfaculty(models.Model):
     department = models.CharField(max_length=200)
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE)
     divison = models.CharField(max_length=200)
-    theory = models.IntegerField(default=0)
-    practical = models.IntegerField(default=0)
+    theory = models.IntegerField(default=0)#for theory feedback
+    practical = models.IntegerField(default=0)#for practical feedback
     tutorial = models.IntegerField()
     practical_batch = models.IntegerField()
     tutorial_batch = models.IntegerField()

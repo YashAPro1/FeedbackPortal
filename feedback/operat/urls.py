@@ -10,6 +10,7 @@ urlpatterns = [
     path('faculty/', views.FacultyDetail,name='faculty'),
     path('subject/', views.SubjectDetail,name='Subject'),
     path('calculate/', views.Calculateavg,name='calculate'),
+    path('department/', views.DepartmentDetail,name='department'),
     #authentication
     path('register', views.UserRegister.as_view(), name='register'),
 	path('login', views.UserLogin.as_view(), name='login'),

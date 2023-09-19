@@ -230,7 +230,7 @@ def DepartmentDetail(requests):
     #for retriving the data
     else:
 
-        tasks = models.Faculty.objects.all()
+        tasks = models.Department.objects.all()
         filterset = DepartmentFilter(requests.GET, queryset=tasks)
         if filterset.is_valid():
          queryset = filterset.qs
