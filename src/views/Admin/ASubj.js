@@ -13,6 +13,8 @@ import axios from "axios";
 import { notifyE, notifyS } from "../../funcs/func1";
 import { ToastContainer } from "react-toastify";
 import Cookies from "universal-cookie";
+import { allData } from "../../data/basicD";
+import { Link } from "react-router-dom";
 // import AddIcon from '@mui/icons-material/Add';
 
 export default function ASubj() {
@@ -38,13 +40,12 @@ export default function ASubj() {
     const handleClose = () => setOpen(false);
 
     // const [age, setAge] = useState('');
+    const [searchQs, setSearchQ] = useState({ semester: 0, department: {} })
     const [deptN, setDeptN] = useState();
     const [semN, setSemN] = useState();
     const [acadYear, setAcadY] = useState("2023-2024");
 
-    const [subjN, setSubjN] = useState();
-    const [dept2, setDept2] = useState();
-    const [sem2, setSem2] = useState();
+    const [addSubjI, setAddSubjI] = useState({ subject: "", semester: "", department: "", deptN: "" })
 
     const [deptAll, setDeptAll] = useState();
     const [subjDat, setSubD] = useState({ rows: [], columns: [] });
@@ -60,15 +61,20 @@ export default function ASubj() {
     }
 
     async function fetchSubj() {
-        if (!semN || !deptN) {
+        if (!semN || !searchQs.department) {
             notifyE("Please provide all inputs for query!");
             return;
         }
-        await axios.get(`http://localhost:8000/api/subject/?semester=${semN}&department=${deptN}`)
+        await axios.get(`http://localhost:8000/api/subject/?semester=${semN}&department=${searchQs.department.id}`)
             .then((res) => {
                 // setSubD(res.data);
                 var dubD = { ...subjDat };
                 dubD.rows = res.data;
+                dubD.rows.forEach((el) => {
+                    if (el.department === searchQs.department.id) {
+                        el.department = searchQs.department.name
+                    }
+                })
                 dubD.columns = [
                     { field: 'id', headerName: 'Id', width: 150 },
                     { field: 'subject', headerName: 'Subject', width: 150 },
@@ -92,12 +98,12 @@ export default function ASubj() {
     // };
 
     async function addSubj() {
-        if (!dept2 || !sem2) {
+        if (!addSubjI.department || !addSubjI.semester || !addSubjI.subject) {
             notifyE("Please fill All Details!")
             return;
         }
         else {
-            await axios.post("http://localhost:8000/api/subject/", { "subject": subjN, "semester": sem2, "department": dept2 }, { withCredentials: true },
+            await axios.post("http://localhost:8000/api/subject/", { "subject": addSubjI.subject, "semester": addSubjI.semester, "department": addSubjI.department }, { withCredentials: true },
                 {
                     headers: {
                         'X-CSRFToken': cookies.get('csrftoken')
@@ -123,7 +129,7 @@ export default function ASubj() {
             <div className="divf fdirc fullbg dashMain">
                 <ToastContainer />
                 <div className="dashbgI"></div>
-                <p className="uTypeN">Admin Dashboard</p>
+                <Link className="uTypeN" to="/admin">Admin Dashboard</Link>
                 <section className="paddM">
                     <form>
                         <div className="divf fdirc comBox gapM">
@@ -154,30 +160,32 @@ export default function ASubj() {
                                             label="Semester"
                                             onChange={(e) => { setSemN(e.target.value) }}
                                         >
-                                            <MenuItem value={1}>1</MenuItem>
-                                            <MenuItem value={2}>2</MenuItem>
-                                            <MenuItem value={3}>3</MenuItem>
-                                            <MenuItem value={4}>4</MenuItem>
-                                            <MenuItem value={5}>5</MenuItem>
-                                            <MenuItem value={6}>6</MenuItem>
-                                            <MenuItem value={7}>7</MenuItem>
-                                            <MenuItem value={8}>8</MenuItem>
-                                            <MenuItem value={9}>9</MenuItem>
-                                            <MenuItem value={10}>10</MenuItem>
+                                            {allData && allData.semester.map((el) => {
+                                                return (
+                                                    <MenuItem value={el}>{el}</MenuItem>
+                                                )
+                                            })}
                                         </Select>
                                     </FormControl>
                                     <FormControl sx={{ minWidth: 120 }} size="small">
                                         <InputLabel id="demo-select-small-label">Department</InputLabel>
                                         <Select
                                             labelId="demo-select-small-label"
-                                            // id="demo-select-small"
-                                            value={deptN}
+                                            id="deptId2"
+                                            // value={deptN}
+                                            defaultValue={""}
                                             label="Department"
-                                            onChange={(e) => { setDeptN(e.target.value) }}
+                                            onChange={(e) => {
+                                                setSearchQ({
+                                                    ...searchQs,
+                                                    department: e.target.value
+                                                })
+                                                document.getElementById("deptId2").value = e.target.value.name;
+                                            }}
                                         >
                                             {deptAll && deptAll.map((el) => {
                                                 return (
-                                                    <MenuItem value={el.name}>{el.name}</MenuItem>
+                                                    <MenuItem value={el}>{el.name}</MenuItem>
                                                 )
                                             })}
                                         </Select>
@@ -201,27 +209,22 @@ export default function ASubj() {
                                 <Typography id="modal-modal-title" variant="h6" component="h2">
                                     Add Subject
                                 </Typography>
-                                <TextField id="filled-basic" label="Subject Name" size="small" value={subjN} onChange={(e) => setSubjN(e.target.value)} />
+                                <TextField id="filled-basic" label="Subject Name" size="small" value={addSubjI.subject} onChange={(e) => setAddSubjI({ ...addSubjI, subject: e.target.value })} />
                                 {/* <TextField id="filled-basic" label="Semester" size="small" value={sem2} onChange={(e) => { setSem2(e.target.value) }} /> */}
                                 <FormControl sx={{ minWidth: 120 }} size="small">
                                     <InputLabel id="demo-select-small-label">Semester</InputLabel>
                                     <Select
                                         labelId="demo-select-small-label"
                                         // id="demo-select-small"
-                                        value={sem2}
+                                        value={addSubjI.semester}
                                         label="Semester"
-                                        onChange={(e) => { setSem2(e.target.value) }}
+                                        onChange={(e) => { setAddSubjI({ ...addSubjI, semester: e.target.value }) }}
                                     >
-                                        <MenuItem value={1}>1</MenuItem>
-                                        <MenuItem value={2}>2</MenuItem>
-                                        <MenuItem value={3}>3</MenuItem>
-                                        <MenuItem value={4}>4</MenuItem>
-                                        <MenuItem value={5}>5</MenuItem>
-                                        <MenuItem value={6}>6</MenuItem>
-                                        <MenuItem value={7}>7</MenuItem>
-                                        <MenuItem value={8}>8</MenuItem>
-                                        <MenuItem value={9}>9</MenuItem>
-                                        <MenuItem value={10}>10</MenuItem>
+                                        {allData && allData.semester.map((el) => {
+                                            return (
+                                                <MenuItem value={el}>{el}</MenuItem>
+                                            )
+                                        })}
                                     </Select>
                                 </FormControl>
                                 <FormControl sx={{ minWidth: 120 }} size="small">
@@ -229,13 +232,13 @@ export default function ASubj() {
                                     <Select
                                         labelId="demo-select-small-label"
                                         // id="demo-select-small"
-                                        value={dept2}
+                                        value={addSubj.deptN}
                                         label="Department"
-                                        onChange={(e) => { setDept2(e.target.value) }}
+                                        onChange={(e) => { setAddSubjI({ ...addSubjI, department: e.target.value.id, deptN: e.target.value.name }) }}
                                     >
                                         {deptAll && deptAll.map((el) => {
                                             return (
-                                                <MenuItem value={el.name}>{el.name}</MenuItem>
+                                                <MenuItem value={el}>{el.name}</MenuItem>
                                             )
                                         })}
                                     </Select>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Navbar from "../../components/Navbar";
 import LineC from "../../components/charts/LineC";
 import DTable from "../../components/tables/Dtable";
@@ -25,7 +26,14 @@ export default function ADash() {
 
                 <section className="sect2">
                     <p className="dashTT1">Faculty Feedback Data</p>
-                    <DTable />
+                    {/* <DTable /> */}
+                </section>
+                <section>
+                    <div className="divf comBox">
+                        <Link to="/admin/departments">Go to Departments</Link>
+                        <Link to="/admin/subjects">Go to Subjects</Link>
+                        <Link to="/admin/faculties">Go to Faculties</Link>
+                    </div>
                 </section>
             </div>
 
