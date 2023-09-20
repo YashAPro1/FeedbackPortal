@@ -91,16 +91,16 @@ class Subjects(models.Model):
     
 
 class Mapfaculty(models.Model):
-    sem = models.IntegerField()
+    sem = models.IntegerField(null=True)
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,null=True)
     department = models.ForeignKey(Department,on_delete=models.CASCADE,null=True);
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,null=True)
     division = models.ForeignKey(Division,on_delete=models.CASCADE,null=True);
     theory = models.IntegerField(default=0)
     practical = models.IntegerField(default=0)
-    tutorial = models.IntegerField()
-    practical_batch = models.IntegerField()
-    tutorial_batch = models.IntegerField()
+    tutorial = models.IntegerField(null=True)
+    practical_batch = models.IntegerField(null=True)
+    tutorial_batch = models.IntegerField(null=True)
     year = models.CharField(max_length=200)
 
     def __str__(self):

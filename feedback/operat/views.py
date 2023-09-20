@@ -101,7 +101,7 @@ def theoryquestDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = TheorymodelSerializers(python_data)
         # ##end
-        serializer = TheorymodelSerializers(requests.data)
+        serializer = TheorymodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             res = {"status":"posted succesfully"}
@@ -133,6 +133,9 @@ def mapfacultyDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultyMapmodelSerializers(data=python_data)
         # ##end
+        # initial_data = requests.data
+        # print(initial_data)
+        # data = models.Mapfaculty.objects.create()
         serializer = FacultyMapmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()#owner = requests.user
@@ -163,7 +166,7 @@ def SubjectDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = SubjectmodelSerializers(python_data)
         # ##end
-        serializer = SubjectmodelSerializers(requests.data)
+        serializer = SubjectmodelSerializers(data = requests.data)
         if serializer.is_valid():
             serializer.save()
             res = {"status":"posted succesfully"}
