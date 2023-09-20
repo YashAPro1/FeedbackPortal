@@ -18,7 +18,8 @@ from django.urls import path, include
 
 from django.conf import settings
 from django.conf.urls.static import static
-
+# from .router import router
+from rest_framework.authtoken import views
 
 admin.site.site_header  =  "Faculty FeedBack KJSIT"  
 admin.site.site_title  =  "Admin Panel"
@@ -28,5 +29,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/',include('operat.urls')),
     path('feed/',include('anony.urls')),
-     path("api-auth/", include("rest_framework.urls")),
+    #  path("api-auth/", include("rest_framework.urls")),
+    path('api-token-a/', views.obtain_auth_token, name='api-token-auth')
 ]
