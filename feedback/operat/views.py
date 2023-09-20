@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from django.db import models as mod
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers
+from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers,DivisionmodelSerializers,FacultyMapmodelSerializersC
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from . import models
 from rest_framework.response import Response
@@ -18,8 +18,8 @@ from .validations import custom_validation, validate_email, validate_password
 from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
-from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter,DivisionFilter
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect, csrf_exempt
 from django.utils.decorators import method_decorator
 # Create your views here.
 
@@ -101,7 +101,7 @@ def theoryquestDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = TheorymodelSerializers(python_data)
         # ##end
-        serializer = TheorymodelSerializers(requests.data)
+        serializer = TheorymodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             res = {"status":"posted succesfully"}
@@ -133,9 +133,12 @@ def mapfacultyDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultyMapmodelSerializers(data=python_data)
         # ##end
+        print(requests.data)
         serializer = FacultyMapmodelSerializers(data=requests.data)
+        
         if serializer.is_valid():
             serializer.save()#owner = requests.user
+            print(serializer.data, serializer.errors)
             res = {"status":"posted succesfully"}
             return Response(res,status=status.HTTP_201_CREATED)
         else:
@@ -163,7 +166,8 @@ def SubjectDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = SubjectmodelSerializers(python_data)
         # ##end
-        serializer = SubjectmodelSerializers(requests.data)
+        
+        serializer = SubjectmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             res = {"status":"posted succesfully"}
@@ -286,7 +290,7 @@ def DivisionDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultymodelSerializers(python_data)
         # ##end6
-        serializer = DivisionDetail(data=requests.data)
+        serializer = DivisionmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
@@ -295,10 +299,10 @@ def DivisionDetail(requests):
     #for retriving the data
     else:
         tasks = models.Division.objects.all()
-        filterset = DepartmentFilter(requests.GET, queryset=tasks)
+        filterset = DivisionFilter(requests.GET, queryset=tasks)
         if filterset.is_valid():
          queryset = filterset.qs
-        serializer = DepartmentmodelSerializers(queryset,many=True)
+        serializer = DivisionmodelSerializers(queryset,many=True)
         return Response(serializer.data)
 
 #Authentication
@@ -333,7 +337,7 @@ class UserRegister(APIView):
     
 
 #for LOGIN THE USER
-@method_decorator(csrf_protect, name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
 class UserLogin(APIView):
     permission_classes = (permissions.AllowAny,)
     authentication_classes = (SessionAuthentication,)
