@@ -570,4 +570,12 @@ button:disabled {
     margin-top: 1rem;
 }
 
+.fColorB {
+    color: black !important;
+}
+
+.modMaj {
+    overflow: auto !important;
+}
+
 /*  */
