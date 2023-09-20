@@ -80,6 +80,8 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
             raise serializers.ValidationError("it cannot be greater that 8 or less than 1")
         return value
     
+
+    
 class FacultymodelSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Faculty
