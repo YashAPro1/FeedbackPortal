@@ -2,7 +2,7 @@ from django.shortcuts import render,HttpResponse
 from django.db import models as mod
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers,DivisionmodelSerializers,FacultyMapmodelSerializersC
+from . serializer import pracquestmodelSerializers,TheorymodelSerializers,FacultyMapmodelSerializers,SubjectmodelSerializers,FacultymodelSerializers,UserRegisterSerializer, UserLoginSerializer,DepartmentmodelSerializers,DivisionmodelSerializers
 from rest_framework.decorators import api_view,permission_classes,authentication_classes
 from . import models
 from rest_framework.response import Response
