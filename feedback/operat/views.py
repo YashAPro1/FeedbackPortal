@@ -226,6 +226,7 @@ def DepartmentDetail(requests):
         serializer = DepartmentmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
+            newdata = serializer.data.copy()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         else:
             Response({"status":"Unsuccesfull"},status=status.HTTP_400_BAD_REQUEST)
@@ -319,24 +320,27 @@ class CheckAuthenticatedView(APIView):
         except:
             return Response({ 'error': 'Something went wrong when checking authentication status' })
 
-@method_decorator(csrf_protect, name='dispatch')     
+# @method_decorator(csrf_protect, name='dispatch')     
 class UserRegister(APIView):
-	permission_classes = (permissions.AllowAny,)
-	def post(self, request):
-		clean_data = custom_validation(request.data)
-		serializer = UserRegisterSerializer(data=clean_data)
-		if serializer.is_valid(raise_exception=True):
-			user = serializer.create(clean_data)
-			if user:
-				return Response({ 'Register': 'Success' }, status=status.HTTP_201_CREATED)
-		return Response(status=status.HTTP_400_BAD_REQUEST)
+    permission_classes = (permissions.AllowAny,)
+    def post(self, request):
+        clean_data = custom_validation(request.data)
+        serializer = UserRegisterSerializer(data=clean_data)
+        # print(serializer.initial_data)
+        if serializer.is_valid(raise_exception=True):
+            # user = serializer.save()
+            user = serializer.create(clean_data)
+            
+            if user:
+                return Response({ 'Register': 'Success' }, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
     
 
 #for LOGIN THE USER
-@method_decorator(csrf_protect, name='dispatch')
-class UserLogin(APIView):
+@method_decorator(csrf_exempt, name='dispatch')
+class UserLogin(APIView):   
     permission_classes = (permissions.AllowAny,)
-    authentication_classes = (SessionAuthentication,)
+    # authentication_classes = (SessionAuthentication,)
     ##
     def post(self, request):
         data = request.data
@@ -365,7 +369,7 @@ class UserLogout(APIView):
 		return Response(status=status.HTTP_200_OK)
 
 
-@method_decorator(ensure_csrf_cookie, name='dispatch')
+# @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny, )
 
