@@ -133,7 +133,7 @@ def mapfacultyDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = FacultyMapmodelSerializers(data=python_data)
         # ##end
-        print(requests.data)
+
         serializer = FacultyMapmodelSerializers(data=requests.data)
         
         if serializer.is_valid():
@@ -166,7 +166,9 @@ def SubjectDetail(requests):
         # python_data = JSONParser.parse(stream=stream)
         # serializer = SubjectmodelSerializers(python_data)
         # ##end
-        
+
+        serializer = SubjectmodelSerializers(data = requests.data)
+
         serializer = SubjectmodelSerializers(data=requests.data)
         if serializer.is_valid():
             serializer.save()
