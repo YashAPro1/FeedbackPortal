@@ -4,7 +4,8 @@ import "../css/login.css";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import Cookies from 'universal-cookie';
+// import Cookies from 'universal-cookie';
+import Cookies from 'js-cookie';
 import { notifyE, notifyS } from "../funcs/func1";
 import axios from "axios";
 import CSRFToken from "../views/Admin/CSRFToken";
@@ -16,19 +17,22 @@ export default function ALogin() {
     const cookies = new Cookies();
     const [user1, setUser1] = useState();
     const [pass1, setPass1] = useState();
+    const [email1, setEmail1] = useState();
 
     const timer = ms => new Promise(res => setTimeout(res, ms));
 
     function retId(idname) {
         return document.getElementById(idname);
     }
-
+    console.log(cookies.get('csrftoken'));
     const doLogin = async () => {
-        await axios.post("http://localhost:8000/api/login/",{ email: "yash@gmail.com", username: user1, password: pass1 },
+        
+        await axios.post("http://127.0.0.1:8000/api/login/",{ "email": email1, "username": user1, "password": pass1 },
         {
             headers: {
                 'Content-Type':'application/json',
-                'X-CSRFToken': cookies.get('csrftoken')
+                // 'X-CSRFToken': "YOrGN1TPl3SoAqMDTkaX7oTgGWIMz6fZ"
+                'X-CSRFToken': cookies.get('csrftoken'),
             }
         })
             .then((res) => {
@@ -75,6 +79,10 @@ export default function ALogin() {
                     <div className="divf divInsL gapSM mUpM">
                         <p className="f1-5">Username</p>
                         <input placeholder="username" className="insLU" onChange={(e) => { setUser1(e.target.value) }} />
+                    </div>
+                    <div className="divf divInsL gapSM">
+                        <p className="f1-5">Email</p>
+                        <input placeholder="Email" className="insLU" type="email" onChange={(e) => { setEmail1(e.target.value) }} />
                     </div>
                     <div className="divf divInsL gapSM">
                         <p className="f1-5">Password</p>

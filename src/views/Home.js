@@ -4,6 +4,7 @@ import { faBookOpen, faFlaskVial } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from "react";
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 // import axios from "axios";
+import Cookies from 'universal-cookie';
 import { styled } from '@mui/material/styles';
 
 export default function Home() {
@@ -23,13 +24,14 @@ export default function Home() {
 
 
 
+
   // async function getallquestions() {
   //   try {
   //     await axios.get("http://127.0.0.1:8000/api/theoryquest/",{
-  //       headers: {
-  //           'content-type': 'text/json',
+        // headers: {
+        //     'content-type': 'text/json',
 
-  //       }
+        // }
   //     }).then(res=>{
   //       console.log(res.data)
   //     })

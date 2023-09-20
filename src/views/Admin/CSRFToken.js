@@ -22,7 +22,8 @@ const CSRFToken = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                await axios.get(`${process.env.REACT_APP_API_URL}/accounts/csrf_cookie`);
+                await axios.get("http://127.0.0.1:8000/api/csrf_cookie");
+                // await axios.get(`${process.env.REACT_APP_API_URL}/api/csrf_cookie`);
             } catch (err) {
 
             }
@@ -35,6 +36,7 @@ const CSRFToken = () => {
     return (
         // THIS IS HIDDEN INPUT WHICH WILL CONTENT THE VALUE OF CSF TOKEN
         <input type='hidden' name='csrfmiddlewaretoken' value={csrftoken} />
+        
     );
 };
 
