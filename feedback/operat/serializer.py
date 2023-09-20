@@ -33,7 +33,7 @@ class UserLoginSerializer(serializers.Serializer):
 #authentications end
 
 
-#funstions for validators
+#functions for validators
 def onlyoneorzero(value):
     if value!=0 or value!=1:
         raise serializers.ValidationError("It should be either one or zero")
@@ -59,7 +59,7 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Mapfaculty
         fields = "__all__"
-    
+        depth=1
     def create(self,validate_data):
         return  models.Mapfaculty.objects.create(**validate_data)
     
@@ -92,7 +92,8 @@ class SubjectmodelSerializers(serializers.ModelSerializer):
         fields = "__all__"
     def create(self,validate_data):
         return  models.Subjects.objects.create(**validate_data)
-    
+
+#Model for division 
 class DivisionmodelSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Division

@@ -7,7 +7,7 @@ admin.site.register(md.AppUser)
 
 @admin.register(md.Subjects)
 class SubjectAdmin(admin.ModelAdmin):
-    list_display = ["id","subject","semester","faculty"]
+    list_display = ["id","subject","semester"]
 
 @admin.register(md.Faculty)
 class FacultyAdmin(admin.ModelAdmin):
@@ -15,7 +15,7 @@ class FacultyAdmin(admin.ModelAdmin):
 
 @admin.register(md.Mapfaculty)
 class MapfacultyAdmin(admin.ModelAdmin):
-    list_display = ["id","sem","faculty","department","subject","divison","theory","practical","tutorial","practical_batch","tutorial_batch","year"]
+    list_display = ["id","sem","faculty","department","subject","division","theory","practical","tutorial","practical_batch","tutorial_batch","year"]
    
 @admin.register(md.Department)
 class DepartmentAdmin(admin.ModelAdmin):

@@ -6,7 +6,7 @@ from . import models
 class SubjectsFilter(django_filters.FilterSet):
     class Meta:
         model = models.Subjects
-        fields =["subject","semester"]
+        fields =["semester", "department"]
 
 #This is filter class for filtering data in faculty
 class FacultyFilter(django_filters.FilterSet):
@@ -18,7 +18,7 @@ class FacultyFilter(django_filters.FilterSet):
 class MapfacultyFilter(django_filters.FilterSet):
     class Meta:
         model = models.Mapfaculty
-        fields =["department","divison","faculty","subject"]
+        fields =["department","division","faculty","subject"]
 
 #This is filter class for filtering data in theory_questions
 class TheoryQuestionFilter(django_filters.FilterSet):
@@ -35,12 +35,11 @@ class PracticalQuestionFilter(django_filters.FilterSet):
 #This is filter class for filtering data in Department
 class DepartmentFilter(django_filters.FilterSet):
     class Meta: 
-        model = models.Department
+        model = models.Department   
         fields =["name"]
 
 class DivisionFilter(django_filters.FilterSet):
     class Meta: 
         model = models.Division
-        fields =["name"]
-
+        fields =["name","department"]
 
