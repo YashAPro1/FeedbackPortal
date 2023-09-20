@@ -19,7 +19,7 @@ from rest_framework import permissions
 from django.conf import settings
 User = settings.AUTH_USER_MODEL
 from .filters import SubjectsFilter,FacultyFilter,MapfacultyFilter,TheoryQuestionFilter,PracticalQuestionFilter,DepartmentFilter
-from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect,csrf_exempt
 from django.utils.decorators import method_decorator
 # Create your views here.
 
