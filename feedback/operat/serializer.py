@@ -61,14 +61,14 @@ class FacultyMapmodelSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Mapfaculty
         fields = "__all__"
-        depth=1
-    def __init__(self, *args, **kwargs):
-        super(FacultyMapmodelSerializers, self).__init__(*args, **kwargs)
-        request = self.context.get('request')
-        if request and request.method=='POST':
-            self.Meta.depth = 0
-        else:
-            self.Meta.depth = 1
+        # depth=1
+    # def __init__(self, *args, **kwargs):
+    #     super(FacultyMapmodelSerializers, self).__init__(*args, **kwargs)
+    #     request = self.context.get('request')
+    #     if request and request.method=='POST':
+    #         self.Meta.depth = 0
+    #     else:
+    #         self.Meta.depth = 1
     def create(self,validate_data):
         return  models.Mapfaculty.objects.create(**validate_data)
     
