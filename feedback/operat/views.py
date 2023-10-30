@@ -257,6 +257,8 @@ def Calculateavg(requests):
     # year = requests.POST['year']
     # sem = requests.POST['sem']
     cal = {}
+    above = {}
+    below = {}
     practical_feedback = {}
     theory_feedback = {}
     if models.Faculty.objects.filter(faculty_name=faculty).exists():
@@ -269,17 +271,23 @@ def Calculateavg(requests):
         cal['faculty'] = faculty
         cal['subject'] = subject
         cal['department'] = department
-        cal['division'] = division
+        cal['division'] = divisionw
         cal['batch'] = batch
         cal['batch'] = batch
         cal['semester'] = sem
         cal['f_date'] = year
         for i in range(12):
+            above['theory'] = Theory_feedback.objects.filter(faculty=id,semester = sem,f_date=year, attendence = 'above').aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
+            below['theory'] = Theory_feedback.objects.filter(faculty=id,semester = sem,f_date=year, attendence = 'below').aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
             theory_feedback[f"Q{i+1}"] = Theory_feedback.objects.filter(faculty=id,semester = sem,f_date=year).aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
         for i in range(8):
+            above['practical'] = Practical_feedback.objects.filter(faculty=id,semester = sem,f_date=year, attendence = 'above').aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
+            below['practical'] = Practical_feedback.objects.filter(faculty=id,semester = sem,f_date=year, attendence = 'below').aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
             practical_feedback[f"Q{i+1}"] = Practical_feedback.objects.filter(faculty=id,semester = sem,f_date=year).aggregate(mod.Avg(f"Q{i+1}"))[f'Q{i+1}__avg']
         cal["practical_feedback"] = practical_feedback
         cal["theory_feedback"] = theory_feedback
+        cal["above"] = above
+        cal["below"] = below
         return JsonResponse(cal)
 
 @api_view(['GET',"POST"])  
