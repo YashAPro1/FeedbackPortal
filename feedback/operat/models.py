@@ -93,9 +93,9 @@ class Subjects(models.Model):
 class Mapfaculty(models.Model):
     sem = models.IntegerField(null=True)
     faculty = models.ForeignKey(Faculty,on_delete=models.CASCADE,null=True)
-    department = models.ForeignKey(Department,on_delete=models.CASCADE,null=True);
+    department = models.ForeignKey(Department,on_delete=models.CASCADE,null=True)
     subject = models.ForeignKey(Subjects,on_delete=models.CASCADE,null=True)
-    division = models.ForeignKey(Division,on_delete=models.CASCADE,null=True);
+    division = models.ForeignKey(Division,on_delete=models.CASCADE,null=True)
     theory = models.IntegerField(default=0)
     practical = models.IntegerField(default=0)
     tutorial = models.IntegerField(null=True)

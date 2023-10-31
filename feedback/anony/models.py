@@ -84,3 +84,6 @@ class Theory_feedback(models.Model):
     #     return f"Theory_feedback : {self.id}"
     
 
+class StudentUser(models.Model):
+    username = models.CharField(max_length=30)
+    password = models.CharField(max_length=30)

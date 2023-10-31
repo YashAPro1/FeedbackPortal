@@ -18,3 +18,8 @@ class theoryfeedbackmodelSerializers(serializers.ModelSerializer):
     class Meta:
         model = models.Theory_feedback
         fields = "__all__"
+
+class StudentuserSerializers(serializers.ModelSerializer):
+    class Meta:
+        model = models.StudentUser
+        fields = "__all__"

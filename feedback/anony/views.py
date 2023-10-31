@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import JsonResponse
 from . import models
-from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers
+from .serializer import theoryfeedbackmodelSerializers,pracfeedbackmodelSerializers,StudentuserSerializers
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
@@ -117,4 +117,8 @@ def PracticalFeedback(requests):
 #     except:
 #         return Response({'bool':False,'msg':"Incorrect Credentials"},status=status.HTTP_400_BAD_REQUEST)
     
-
+@api_view(['GET',"POST"])    
+def senduser(requests):
+    all_user = models.StudentUser.objects.all()
+    serializer = StudentuserSerializers(all_user,many=True)
+    return Response(serializer.data,status=status.HTTP_200_OK)
